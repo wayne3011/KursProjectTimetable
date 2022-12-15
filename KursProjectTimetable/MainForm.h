@@ -106,9 +106,11 @@ namespace KursProjectTimetable {
 			// 
 			this->treeBox->Controls->Add(this->buttonNext);
 			this->treeBox->Controls->Add(this->buttonPrevious);
+			this->treeBox->ForeColor = System::Drawing::SystemColors::ControlText;
 			this->treeBox->Location = System::Drawing::Point(557, 70);
 			this->treeBox->Margin = System::Windows::Forms::Padding(3, 25, 3, 3);
 			this->treeBox->Name = L"treeBox";
+			this->treeBox->Padding = System::Windows::Forms::Padding(3, 25, 3, 3);
 			this->treeBox->Size = System::Drawing::Size(300, 250);
 			this->treeBox->TabIndex = 1;
 			this->treeBox->TabStop = false;
@@ -151,12 +153,13 @@ namespace KursProjectTimetable {
 		void loadFromFile(String^ fileName);
 		void timetablePaint(int facultyNumber, int courseNumber, int groupNumber, int dayNumber);
 		void nextDayPaint();
+		void previousDayPaint();
 		private: System::Void loadDataButton_Click(System::Object^ sender, System::EventArgs^ e) {
 		OpenFileDialog openFileDialog;
 		openFileDialog.Filter = "JSON (.json)|*.json";
 		if (openFileDialog.ShowDialog() == Windows::Forms::DialogResult::OK) {
 			
-			this->tableLayoutPanel1->Controls->RemoveByKey("tabControl");
+			this->treeBox->Controls->RemoveByKey("tabControl");
 			loadFromFile(openFileDialog.FileName);
 		}
 		else return;
@@ -165,13 +168,19 @@ namespace KursProjectTimetable {
 		}
 		private: System::Void treeView_NodeClick(System::Object^ sender, System::Windows::Forms::TreeNodeMouseClickEventArgs ^ e) {
 			if (e->Node->Nodes->Count == 0) {
-				this->tableLayoutPanel1->Controls->RemoveByKey("schoolDayTree");
+				this->treeBox->Controls->RemoveByKey("schoolDayTree");
 				timetablePaint(e->Node->TreeView->Parent->TabIndex, e->Node->Parent->Parent->Index, e->Node->Parent->Index, e->Node->Index);
+				treeBox->Update();
 			};
 		}
 private: System::Void buttonPrevious_Click(System::Object^ sender, System::EventArgs^ e) {
+	if (!this->treeBox->Controls->ContainsKey("schoolDayTree")) return;
+	this->treeBox->Controls->RemoveByKey("schoolDayTree");
+	previousDayPaint();
 }
 private: System::Void buttonNext_Click(System::Object^ sender, System::EventArgs^ e) {
+	if (!this->treeBox->Controls->ContainsKey("schoolDayTree")) return;
+	this->treeBox->Controls->RemoveByKey("schoolDayTree");
 	nextDayPaint();
 }
 };

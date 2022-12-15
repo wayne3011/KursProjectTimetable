@@ -16,6 +16,9 @@ struct SchoolDay {
 	{
 		this->day = day;
 	}
+	bool operator!=(SchoolDay other) {
+		return this->day != other.day;
+	}
 };
 struct Timetable {
 	CircularList<SchoolDay> schoolDays;

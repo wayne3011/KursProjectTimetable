@@ -15,6 +15,24 @@ int main(array < String^>^ args)
     Application::Run(% form);
 }
 SLList<Faculty> faculties;
+struct SelectedSchoolDay {
+	int facultyNumber;
+	int courseNumber;
+	int groupNumber;
+	SchoolDay selectedDay;
+	SelectedSchoolDay()
+	{
+
+	}
+	SelectedSchoolDay(int facultyNumber, int courseNumber, int groupNumber, SchoolDay selectedDay)
+	{
+		this->facultyNumber = facultyNumber;
+		this->courseNumber = courseNumber;
+		this->groupNumber = groupNumber;
+		this->selectedDay = selectedDay;
+	}
+};
+SelectedSchoolDay selectedsSchoolDay;
 void jParse(nlohmann::json_abi_v3_11_2::json& j_complete, SLList<Faculty>& faculties);
 System::Windows::Forms::TreeView^ schoolDayTreePaint(SchoolDay schoolDay);
 void KursProjectTimetable::MainForm::loadFromFile(String^ fileName)
@@ -65,9 +83,14 @@ void KursProjectTimetable::MainForm::loadFromFile(String^ fileName)
 void KursProjectTimetable::MainForm::timetablePaint(int facultyNumber, int courseNumber, int groupNumber, int dayNumber) {
 	TreeView^ schoolDay = schoolDayTreePaint(faculties[facultyNumber].courses[courseNumber].groups[groupNumber].timetable.schoolDays[dayNumber]);
 	schoolDay->Name = L"schoolDayTree";
-	schoolDay->Size = System::Drawing::Size(treeBox->Width, treeBox->Height);
+	schoolDay->Size = System::Drawing::Size(treeBox->Width-4, treeBox->Height-12);
+	schoolDay->Location = System::Drawing::Point(2, 12);
 	schoolDay->Margin = System::Windows::Forms::Padding(0, 25, 0, 0);
+	schoolDay->BorderStyle = System::Windows::Forms::BorderStyle::None;
+	schoolDay->BackColor = treeBox->BackColor;
 	treeBox->Controls->Add(schoolDay);
+	selectedsSchoolDay = SelectedSchoolDay(facultyNumber, courseNumber, groupNumber, faculties[facultyNumber].courses[courseNumber].groups[groupNumber].timetable.schoolDays[dayNumber]);
+	treeBox->Text = "Ãðóïïà ¹" + groupNumber + " " + stoS(selectedsSchoolDay.selectedDay.day);
 	treeBox->Update();
 }
 System::Windows::Forms::TreeView^ schoolDayTreePaint(SchoolDay schoolDay) {
@@ -87,7 +110,34 @@ System::Windows::Forms::TreeView^ schoolDayTreePaint(SchoolDay schoolDay) {
 	return schoolDayTree;
 };
 void KursProjectTimetable::MainForm::nextDayPaint() {
+	SchoolDay nextSchoolDay = faculties[selectedsSchoolDay.facultyNumber].courses[selectedsSchoolDay.courseNumber].groups[selectedsSchoolDay.groupNumber].timetable.schoolDays.getNext(selectedsSchoolDay.selectedDay);
+	TreeView^ schoolDay = schoolDayTreePaint(nextSchoolDay);
+	schoolDay->Name = L"schoolDayTree";
+	schoolDay->Size = System::Drawing::Size(treeBox->Width - 4, treeBox->Height - 12);
+	schoolDay->Location = System::Drawing::Point(2, 12);
+	schoolDay->Margin = System::Windows::Forms::Padding(0, 25, 0, 0);
+	schoolDay->BorderStyle = System::Windows::Forms::BorderStyle::None;
+	schoolDay->BackColor = treeBox->BackColor;
+	treeBox->Controls->Add(schoolDay);
+	selectedsSchoolDay.selectedDay = nextSchoolDay;
+	treeBox->Text = "Ãðóïïà ¹" + selectedsSchoolDay.groupNumber + " " + stoS(selectedsSchoolDay.selectedDay.day);
+	treeBox->Update();
 }
+void KursProjectTimetable::MainForm::previousDayPaint() {
+	SchoolDay nextSchoolDay = faculties[selectedsSchoolDay.facultyNumber].courses[selectedsSchoolDay.courseNumber].groups[selectedsSchoolDay.groupNumber].timetable.schoolDays.getPrevious(selectedsSchoolDay.selectedDay);
+	TreeView^ schoolDay = schoolDayTreePaint(nextSchoolDay);
+	schoolDay->Name = L"schoolDayTree";
+	schoolDay->Size = System::Drawing::Size(treeBox->Width - 4, treeBox->Height - 12);
+	schoolDay->Location = System::Drawing::Point(2, 12);
+	schoolDay->Margin = System::Windows::Forms::Padding(0, 25, 0, 0);
+	schoolDay->BorderStyle = System::Windows::Forms::BorderStyle::None;
+	schoolDay->BackColor = treeBox->BackColor;
+	treeBox->Controls->Add(schoolDay);
+	selectedsSchoolDay.selectedDay = nextSchoolDay;
+	treeBox->Text = "Ãðóïïà ¹" + selectedsSchoolDay.groupNumber + " " + stoS(selectedsSchoolDay.selectedDay.day);
+	treeBox->Update();
+}
+
 void jParse(nlohmann::json_abi_v3_11_2::json& j_complete, SLList<Faculty>& faculties)
 {
 	for (auto& j_faculty : j_complete.items())

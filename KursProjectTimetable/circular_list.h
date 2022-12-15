@@ -41,10 +41,29 @@ public:
 			currentNode = currentNode->next;
 			iterator ++;
 		}
-		if (iterator == size) throw std::exception("Element with this index does not next");
+		if (iterator == size) throw std::exception("Element with this index does not exist");
 		return currentNode->data;
 	}
-	
+	T getNext(T node) {
+		Node* current = head;
+		int iterator = 0;
+		while (node != current->data && iterator < size) {
+			current = current->next;
+			iterator++;
+		}
+		if (iterator == size) throw std::exception("Element with this count does not exist");
+		return current->next->data;
+	}
+	T getPrevious(T node) {
+		Node* current = head;
+		int iterator = 0;
+		while (node != current->data && iterator < size) {
+			current = current->next;
+			iterator++;
+		}
+		if (iterator == size) throw std::exception("Element with this count does not exist");
+		return current->previous->data;
+	}
 	void pop_front();
 	void removeByValue(T value);
 private:
