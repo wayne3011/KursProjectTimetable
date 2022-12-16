@@ -32,13 +32,34 @@ public:
 		if (!currentNode) throw std::exception("Element with this index does not exist");
 		return currentNode->data;
 	}
+	T& getByValue(T data) {
+		Node* currentNode = head;
+		int iterator = 0;
+		while (currentNode->data != data && currentNode != 0) {
+			currentNode = currentNode->next;
+			iterator++;
+		}
+		if (!currentNode) throw std::exception("Element with this data does not exist");
+		return currentNode->data;
+	}
 	int getSize() { return size; }
 	bool is_empty();
 	void pop_front();
 	void pop_back();
 	void removeByValue(T value);
+	void sort();
+	void clear();
 	
 private:
+	Node* getNodeAt(int index) {
+		Node* currentNode = head;
+		for (int i = 0; i < index && i < size; i++)
+		{
+			currentNode = currentNode->next;
+		}
+		if (!currentNode) std::exception("Element with this index does not exist");
+		return currentNode;
+	};
 	Node* head = 0;//начало списка
 	Node* end = 0;//конец списка
 	int size = 0;
@@ -101,6 +122,29 @@ inline void SLList<T>::removeByValue(T value)
 	previous->next = previous->next->next;
 	delete removableNode;
 	size--;
+}
+template<class T>
+inline void SLList<T>::sort()
+{	
+	for (size_t i = 0; i < size; i++)
+	{
+		Node x = Node(getNodeAt(i)->data);
+		size_t j = i;
+		while (j > 0 && getNodeAt(j - 1)->data > x.data) {
+			getNodeAt(j)->data = getNodeAt(j - 1)->data;
+			j--;
+		}
+		getNodeAt(j)->data = x.data;
+	}
+}
+template<class T>
+inline void SLList<T>::clear()
+{
+	while (size > 0) {
+		pop_front();
+	}
+	head = 0;
+	end = 0;
 }
 #endif
 

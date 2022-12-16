@@ -66,6 +66,8 @@ public:
 	}
 	void pop_front();
 	void removeByValue(T value);
+	void clear();
+	void sort();
 private:
 	Node* head = 0;
 	int size = 0;
@@ -115,5 +117,34 @@ inline void CircularList<T>::removeByValue(T value)
 	removableNode->previous->next = removableNode->next;
 	delete removableNode;
 	size--;
+}
+
+template<typename T>
+inline void CircularList<T>::clear()
+{
+	while (size > 0) {
+		pop_front();
+	}
+	head = 0;
+}
+
+template<typename T>
+inline void CircularList<T>::sort()
+{
+	Node* i_pointer = head;
+	for (size_t i = 0; i < size; i++)
+	{
+		Node x = Node(i_pointer->data);
+		size_t j = i;
+		Node* node_j = i_pointer;
+		while (j > 0 && node_j->previous->data > x.data)
+		{
+			node_j->data = node_j->previous->data;
+			node_j = node_j->previous;
+			j--;
+		}
+		node_j->data = x.data;
+		i_pointer = i_pointer->next;
+	}
 }
 

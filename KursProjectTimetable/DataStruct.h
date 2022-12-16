@@ -19,6 +19,9 @@ struct SchoolDay {
 	bool operator!=(SchoolDay other) {
 		return this->day != other.day;
 	}
+	bool operator>(SchoolDay other) {
+		return this->day > other.day;
+	};
 };
 struct Timetable {
 	CircularList<SchoolDay> schoolDays;
@@ -41,6 +44,9 @@ struct Group {
 	Group(int number) {
 		this->number = number;
 	}
+	bool operator>(Group other) {
+		return this->number > other.number;
+	}
 };
 struct Course {
 	int number;
@@ -49,10 +55,15 @@ struct Course {
 	Course(int number) {
 		this->number = number;
 	};
-	bool operator  < (Course Value) {
+	bool operator< (Course Value) {
 		return this->number < Value.number;
 	}
-	
+	bool operator>(Course other) {
+		return this->number > other.number;
+	}
+	bool operator!=(Course other) {
+		return this->number != other.number;
+	}
 };
 struct Faculty
 {
@@ -62,5 +73,14 @@ struct Faculty
 	Faculty(int number) {
 		this->number = number;
 	};
+	bool operator>(Faculty other) {
+		return this->number > other.number;
+	}
+	bool operator==(Faculty other) {
+		return this->number == other.number;
+	}
+	bool operator!=(Faculty other) {
+		return this->number != other.number;
+	}
 };
 

@@ -1,4 +1,7 @@
 #pragma once
+#include "AddFacultyForm.h"
+#include "AddCourseForm.h"
+#include "AddGroupForm.h"
 namespace KursProjectTimetable {
 
 	using namespace System;
@@ -39,10 +42,22 @@ namespace KursProjectTimetable {
 	private: System::Windows::Forms::TabPage^ tabPage2;
 	private: System::Windows::Forms::Button^ loadDataButton;
 	private: System::Windows::Forms::TableLayoutPanel^ tableLayoutPanel1;
+	private: System::Windows::Forms::GroupBox^ controlElementBox;
+
 	private: System::Windows::Forms::GroupBox^ treeBox;
 	private: System::Windows::Forms::Button^ buttonNext;
-
 	private: System::Windows::Forms::Button^ buttonPrevious;
+	private: System::Windows::Forms::Button^ addCourseButton;
+
+	private: System::Windows::Forms::Button^ addFacultyButton;
+	private: System::Windows::Forms::Button^ button4;
+	private: System::Windows::Forms::Button^ addGroupButton;
+
+
+
+
+
+
 
 
 
@@ -64,10 +79,16 @@ namespace KursProjectTimetable {
 		{
 			this->loadDataButton = (gcnew System::Windows::Forms::Button());
 			this->tableLayoutPanel1 = (gcnew System::Windows::Forms::TableLayoutPanel());
+			this->controlElementBox = (gcnew System::Windows::Forms::GroupBox());
+			this->button4 = (gcnew System::Windows::Forms::Button());
+			this->addGroupButton = (gcnew System::Windows::Forms::Button());
+			this->addCourseButton = (gcnew System::Windows::Forms::Button());
+			this->addFacultyButton = (gcnew System::Windows::Forms::Button());
 			this->treeBox = (gcnew System::Windows::Forms::GroupBox());
 			this->buttonNext = (gcnew System::Windows::Forms::Button());
 			this->buttonPrevious = (gcnew System::Windows::Forms::Button());
 			this->tableLayoutPanel1->SuspendLayout();
+			this->controlElementBox->SuspendLayout();
 			this->treeBox->SuspendLayout();
 			this->SuspendLayout();
 			// 
@@ -92,7 +113,7 @@ namespace KursProjectTimetable {
 			this->tableLayoutPanel1->ColumnStyles->Add((gcnew System::Windows::Forms::ColumnStyle(System::Windows::Forms::SizeType::Percent,
 				35.58139F)));
 			this->tableLayoutPanel1->Controls->Add(this->loadDataButton, 0, 0);
-			this->tableLayoutPanel1->Controls->Add(this->treeBox, 1, 1);
+			this->tableLayoutPanel1->Controls->Add(this->controlElementBox, 1, 1);
 			this->tableLayoutPanel1->Location = System::Drawing::Point(12, 2);
 			this->tableLayoutPanel1->Name = L"tableLayoutPanel1";
 			this->tableLayoutPanel1->RowCount = 2;
@@ -102,17 +123,70 @@ namespace KursProjectTimetable {
 			this->tableLayoutPanel1->TabIndex = 0;
 			this->tableLayoutPanel1->Paint += gcnew System::Windows::Forms::PaintEventHandler(this, &MainForm::tableLayoutPanel1_Paint);
 			// 
+			// controlElementBox
+			// 
+			this->controlElementBox->Controls->Add(this->button4);
+			this->controlElementBox->Controls->Add(this->addGroupButton);
+			this->controlElementBox->Controls->Add(this->addCourseButton);
+			this->controlElementBox->Controls->Add(this->addFacultyButton);
+			this->controlElementBox->Controls->Add(this->treeBox);
+			this->controlElementBox->Location = System::Drawing::Point(557, 48);
+			this->controlElementBox->Name = L"controlElementBox";
+			this->controlElementBox->Size = System::Drawing::Size(300, 496);
+			this->controlElementBox->TabIndex = 1;
+			this->controlElementBox->TabStop = false;
+			this->controlElementBox->Text = L"groupBox1";
+			// 
+			// button4
+			// 
+			this->button4->Location = System::Drawing::Point(7, 347);
+			this->button4->Name = L"button4";
+			this->button4->Size = System::Drawing::Size(123, 23);
+			this->button4->TabIndex = 6;
+			this->button4->Text = L"Добавить предмет";
+			this->button4->UseVisualStyleBackColor = true;
+			// 
+			// addGroupButton
+			// 
+			this->addGroupButton->Location = System::Drawing::Point(7, 317);
+			this->addGroupButton->Name = L"addGroupButton";
+			this->addGroupButton->Size = System::Drawing::Size(123, 23);
+			this->addGroupButton->TabIndex = 5;
+			this->addGroupButton->Text = L"Добавить группу";
+			this->addGroupButton->UseVisualStyleBackColor = true;
+			this->addGroupButton->Click += gcnew System::EventHandler(this, &MainForm::addGroupButton_Click);
+			// 
+			// addCourseButton
+			// 
+			this->addCourseButton->Location = System::Drawing::Point(7, 287);
+			this->addCourseButton->Name = L"addCourseButton";
+			this->addCourseButton->Size = System::Drawing::Size(123, 23);
+			this->addCourseButton->TabIndex = 4;
+			this->addCourseButton->Text = L"Добавить курс";
+			this->addCourseButton->UseVisualStyleBackColor = true;
+			this->addCourseButton->Click += gcnew System::EventHandler(this, &MainForm::addCourseButton_Click);
+			// 
+			// addFacultyButton
+			// 
+			this->addFacultyButton->Location = System::Drawing::Point(7, 257);
+			this->addFacultyButton->Name = L"addFacultyButton";
+			this->addFacultyButton->Size = System::Drawing::Size(123, 23);
+			this->addFacultyButton->TabIndex = 3;
+			this->addFacultyButton->Text = L"Добавить факультет";
+			this->addFacultyButton->UseVisualStyleBackColor = true;
+			this->addFacultyButton->Click += gcnew System::EventHandler(this, &MainForm::addFacultyButton_Click);
+			// 
 			// treeBox
 			// 
 			this->treeBox->Controls->Add(this->buttonNext);
 			this->treeBox->Controls->Add(this->buttonPrevious);
 			this->treeBox->ForeColor = System::Drawing::SystemColors::ControlText;
-			this->treeBox->Location = System::Drawing::Point(557, 70);
+			this->treeBox->Location = System::Drawing::Point(0, 0);
 			this->treeBox->Margin = System::Windows::Forms::Padding(3, 25, 3, 3);
 			this->treeBox->Name = L"treeBox";
 			this->treeBox->Padding = System::Windows::Forms::Padding(3, 25, 3, 3);
 			this->treeBox->Size = System::Drawing::Size(300, 250);
-			this->treeBox->TabIndex = 1;
+			this->treeBox->TabIndex = 2;
 			this->treeBox->TabStop = false;
 			// 
 			// buttonNext
@@ -145,24 +219,31 @@ namespace KursProjectTimetable {
 			this->Text = L"MainForm";
 			this->tableLayoutPanel1->ResumeLayout(false);
 			this->tableLayoutPanel1->PerformLayout();
+			this->controlElementBox->ResumeLayout(false);
 			this->treeBox->ResumeLayout(false);
 			this->ResumeLayout(false);
 
 		}
 #pragma endregion
 		void loadFromFile(String^ fileName);
+		void facultiesListPaint();
 		void timetablePaint(int facultyNumber, int courseNumber, int groupNumber, int dayNumber);
 		void nextDayPaint();
 		void previousDayPaint();
+		void addFaculty(int facultyNumber);
+		void addCourse(int facultyNumber, int courseNumber);
+		void addGroup(int facultyNumber, int courseNumber, int groupNumber);
 		private: System::Void loadDataButton_Click(System::Object^ sender, System::EventArgs^ e) {
 		OpenFileDialog openFileDialog;
 		openFileDialog.Filter = "JSON (.json)|*.json";
 		if (openFileDialog.ShowDialog() == Windows::Forms::DialogResult::OK) {
 			
-			this->treeBox->Controls->RemoveByKey("tabControl");
+			this->tableLayoutPanel1->Controls->RemoveByKey("tabControl");
 			loadFromFile(openFileDialog.FileName);
+			this->tableLayoutPanel1->Update();
 		}
-		else return;
+
+		else return this->tableLayoutPanel1->Controls->RemoveByKey("tabControl");
 		}
 		private: System::Void tableLayoutPanel1_Paint(System::Object^ sender, System::Windows::Forms::PaintEventArgs^ e) {
 		}
@@ -177,11 +258,43 @@ private: System::Void buttonPrevious_Click(System::Object^ sender, System::Event
 	if (!this->treeBox->Controls->ContainsKey("schoolDayTree")) return;
 	this->treeBox->Controls->RemoveByKey("schoolDayTree");
 	previousDayPaint();
+	controlElementBox->Update();
 }
 private: System::Void buttonNext_Click(System::Object^ sender, System::EventArgs^ e) {
 	if (!this->treeBox->Controls->ContainsKey("schoolDayTree")) return;
 	this->treeBox->Controls->RemoveByKey("schoolDayTree");
 	nextDayPaint();
+	controlElementBox->Update();
+}
+private: System::Void addFacultyButton_Click(System::Object^ sender, System::EventArgs^ e) {
+	AddFacultyForm^ addFacultyForm = gcnew (KursProjectTimetable::AddFacultyForm);
+	
+	addFacultyForm->ShowDialog();
+
+	if (addFacultyForm->facultyNumber == -1) {
+		return;
+	}
+	addFaculty(addFacultyForm->facultyNumber);
+	
+}
+
+
+private: System::Void addCourseButton_Click(System::Object^ sender, System::EventArgs^ e) {
+	KursProjectTimetable::AddCourseForm^ addCourseForm = gcnew(KursProjectTimetable::AddCourseForm);
+	addCourseForm->ShowDialog();
+	if (addCourseForm->facultyNumber == -1 || addCourseForm->facultyNumber == -1) {
+		return;
+	}
+	addCourse(addCourseForm->facultyNumber, addCourseForm->courseNumber);
+	
+}
+private: System::Void addGroupButton_Click(System::Object^ sender, System::EventArgs^ e) {
+	KursProjectTimetable::AddGroupForm^ addGroupForm = gcnew(KursProjectTimetable::AddGroupForm);
+	addGroupForm->ShowDialog();
+	if (addGroupForm->facultyNumber == -1 || addGroupForm->groupNumber == -1 || addGroupForm->courseNumber == -1) {
+		return;
+	}
+	addGroup(addGroupForm->facultyNumber, addGroupForm->courseNumber, addGroupForm->groupNumber);
 }
 };
 }

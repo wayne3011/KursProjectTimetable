@@ -21,6 +21,15 @@
     <ClCompile Include="DataStruct.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="AddFacultyForm.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="AddCourseForm.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="AddGroupForm.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="MainForm.h">
@@ -43,6 +52,15 @@
     </ClInclude>
     <ClInclude Include="string_converter.h">
       <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="AddFacultyForm.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="AddCourseForm.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="AddGroupForm.h">
+      <Filter>Source Files</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
