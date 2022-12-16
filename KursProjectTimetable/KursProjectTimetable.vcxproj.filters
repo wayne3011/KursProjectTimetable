@@ -13,6 +13,9 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="Source Files\AddNodesForms">
+      <UniqueIdentifier>{3b29a5ca-221d-417a-acf9-d72cc4a3d89f}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="MainForm.cpp">
@@ -21,14 +24,20 @@
     <ClCompile Include="DataStruct.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="AddFacultyForm.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="AddCourseForm.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\AddNodesForms</Filter>
+    </ClCompile>
+    <ClCompile Include="AddFacultyForm.cpp">
+      <Filter>Source Files\AddNodesForms</Filter>
     </ClCompile>
     <ClCompile Include="AddGroupForm.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\AddNodesForms</Filter>
+    </ClCompile>
+    <ClCompile Include="AddSchoolDayForm.cpp">
+      <Filter>Source Files\AddNodesForms</Filter>
+    </ClCompile>
+    <ClCompile Include="addLessonForm.cpp">
+      <Filter>Source Files\AddNodesForms</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -62,5 +71,16 @@
     <ClInclude Include="AddGroupForm.h">
       <Filter>Source Files</Filter>
     </ClInclude>
+    <ClInclude Include="AddSchoolDayForm.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="AddLessonForm.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="AddSchoolDayForm.resx">
+      <Filter>Source Files</Filter>
+    </EmbeddedResource>
   </ItemGroup>
 </Project>

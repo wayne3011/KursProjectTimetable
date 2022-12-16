@@ -44,6 +44,16 @@ public:
 		if (iterator == size) throw std::exception("Element with this index does not exist");
 		return currentNode->data;
 	}
+	T& getByValue(T data) {
+		Node* currentNode = head;
+		int iterator = 0;
+		while (currentNode->data != data && iterator!=size) {
+			currentNode = currentNode->next;
+			iterator++;
+		}
+		if (iterator == size) throw std::exception("Element with this data does not exist");
+		return currentNode->data;
+	}
 	T getNext(T node) {
 		Node* current = head;
 		int iterator = 0;
@@ -145,6 +155,7 @@ inline void CircularList<T>::sort()
 		}
 		node_j->data = x.data;
 		i_pointer = i_pointer->next;
+		i++;
 	}
 }
 

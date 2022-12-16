@@ -2,6 +2,8 @@
 #include "AddFacultyForm.h"
 #include "AddCourseForm.h"
 #include "AddGroupForm.h"
+#include "AddSchoolDayForm.h"
+#include "AddLessonForm.h"
 namespace KursProjectTimetable {
 
 	using namespace System;
@@ -50,8 +52,11 @@ namespace KursProjectTimetable {
 	private: System::Windows::Forms::Button^ addCourseButton;
 
 	private: System::Windows::Forms::Button^ addFacultyButton;
-	private: System::Windows::Forms::Button^ button4;
+
+	private: System::Windows::Forms::Button^ addLessonButton;
+
 	private: System::Windows::Forms::Button^ addGroupButton;
+	private: System::Windows::Forms::Button^ addSchoolDay_button;
 
 
 
@@ -80,7 +85,8 @@ namespace KursProjectTimetable {
 			this->loadDataButton = (gcnew System::Windows::Forms::Button());
 			this->tableLayoutPanel1 = (gcnew System::Windows::Forms::TableLayoutPanel());
 			this->controlElementBox = (gcnew System::Windows::Forms::GroupBox());
-			this->button4 = (gcnew System::Windows::Forms::Button());
+			this->addSchoolDay_button = (gcnew System::Windows::Forms::Button());
+			this->addLessonButton = (gcnew System::Windows::Forms::Button());
 			this->addGroupButton = (gcnew System::Windows::Forms::Button());
 			this->addCourseButton = (gcnew System::Windows::Forms::Button());
 			this->addFacultyButton = (gcnew System::Windows::Forms::Button());
@@ -125,7 +131,8 @@ namespace KursProjectTimetable {
 			// 
 			// controlElementBox
 			// 
-			this->controlElementBox->Controls->Add(this->button4);
+			this->controlElementBox->Controls->Add(this->addSchoolDay_button);
+			this->controlElementBox->Controls->Add(this->addLessonButton);
 			this->controlElementBox->Controls->Add(this->addGroupButton);
 			this->controlElementBox->Controls->Add(this->addCourseButton);
 			this->controlElementBox->Controls->Add(this->addFacultyButton);
@@ -137,20 +144,33 @@ namespace KursProjectTimetable {
 			this->controlElementBox->TabStop = false;
 			this->controlElementBox->Text = L"groupBox1";
 			// 
-			// button4
+			// addSchoolDay_button
 			// 
-			this->button4->Location = System::Drawing::Point(7, 347);
-			this->button4->Name = L"button4";
-			this->button4->Size = System::Drawing::Size(123, 23);
-			this->button4->TabIndex = 6;
-			this->button4->Text = L"Добавить предмет";
-			this->button4->UseVisualStyleBackColor = true;
+			this->addSchoolDay_button->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 8.25F, System::Drawing::FontStyle::Regular,
+				System::Drawing::GraphicsUnit::Point, static_cast<System::Byte>(204)));
+			this->addSchoolDay_button->Location = System::Drawing::Point(7, 347);
+			this->addSchoolDay_button->Name = L"addSchoolDay_button";
+			this->addSchoolDay_button->Size = System::Drawing::Size(142, 23);
+			this->addSchoolDay_button->TabIndex = 7;
+			this->addSchoolDay_button->Text = L"Добавить учебный день";
+			this->addSchoolDay_button->UseVisualStyleBackColor = true;
+			this->addSchoolDay_button->Click += gcnew System::EventHandler(this, &MainForm::addSchoolDay_button_Click);
+			// 
+			// addLessonButton
+			// 
+			this->addLessonButton->Location = System::Drawing::Point(7, 376);
+			this->addLessonButton->Name = L"addLessonButton";
+			this->addLessonButton->Size = System::Drawing::Size(142, 23);
+			this->addLessonButton->TabIndex = 6;
+			this->addLessonButton->Text = L"Добавить предмет";
+			this->addLessonButton->UseVisualStyleBackColor = true;
+			this->addLessonButton->Click += gcnew System::EventHandler(this, &MainForm::addLessonButton_Click);
 			// 
 			// addGroupButton
 			// 
-			this->addGroupButton->Location = System::Drawing::Point(7, 317);
+			this->addGroupButton->Location = System::Drawing::Point(7, 318);
 			this->addGroupButton->Name = L"addGroupButton";
-			this->addGroupButton->Size = System::Drawing::Size(123, 23);
+			this->addGroupButton->Size = System::Drawing::Size(142, 23);
 			this->addGroupButton->TabIndex = 5;
 			this->addGroupButton->Text = L"Добавить группу";
 			this->addGroupButton->UseVisualStyleBackColor = true;
@@ -160,7 +180,7 @@ namespace KursProjectTimetable {
 			// 
 			this->addCourseButton->Location = System::Drawing::Point(7, 287);
 			this->addCourseButton->Name = L"addCourseButton";
-			this->addCourseButton->Size = System::Drawing::Size(123, 23);
+			this->addCourseButton->Size = System::Drawing::Size(142, 23);
 			this->addCourseButton->TabIndex = 4;
 			this->addCourseButton->Text = L"Добавить курс";
 			this->addCourseButton->UseVisualStyleBackColor = true;
@@ -170,7 +190,7 @@ namespace KursProjectTimetable {
 			// 
 			this->addFacultyButton->Location = System::Drawing::Point(7, 257);
 			this->addFacultyButton->Name = L"addFacultyButton";
-			this->addFacultyButton->Size = System::Drawing::Size(123, 23);
+			this->addFacultyButton->Size = System::Drawing::Size(142, 23);
 			this->addFacultyButton->TabIndex = 3;
 			this->addFacultyButton->Text = L"Добавить факультет";
 			this->addFacultyButton->UseVisualStyleBackColor = true;
@@ -233,6 +253,12 @@ namespace KursProjectTimetable {
 		void addFaculty(int facultyNumber);
 		void addCourse(int facultyNumber, int courseNumber);
 		void addGroup(int facultyNumber, int courseNumber, int groupNumber);
+		void addSchoolDayNumber(int facultyNumber, int courseNumber, int groupNumber, int schoolDayNumber);
+
+		void addLesson(int facultyNumber, int courseNumber, int groupNumber, int schoolDayNumber, System::String^ subjectName, System::String^ teacherName, int lessonNumber, int audienceNumber);
+
+	
+		
 		private: System::Void loadDataButton_Click(System::Object^ sender, System::EventArgs^ e) {
 		OpenFileDialog openFileDialog;
 		openFileDialog.Filter = "JSON (.json)|*.json";
@@ -295,6 +321,23 @@ private: System::Void addGroupButton_Click(System::Object^ sender, System::Event
 		return;
 	}
 	addGroup(addGroupForm->facultyNumber, addGroupForm->courseNumber, addGroupForm->groupNumber);
+}
+private: System::Void addSchoolDay_button_Click(System::Object^ sender, System::EventArgs^ e) {
+	KursProjectTimetable::AddSchoolDayForm^ addSchoolDayForm = gcnew(KursProjectTimetable::AddSchoolDayForm);
+	addSchoolDayForm->ShowDialog();
+	if (addSchoolDayForm->facultyNumber == -1 || addSchoolDayForm->courseNumber == -1 || addSchoolDayForm->groupNumber == -1 || addSchoolDayForm->schoolDayNumber == -1) {
+		return;
+	}
+	addSchoolDayNumber(addSchoolDayForm->facultyNumber, addSchoolDayForm->courseNumber, addSchoolDayForm->groupNumber, addSchoolDayForm->schoolDayNumber);
+}
+
+private: System::Void addLessonButton_Click(System::Object^ sender, System::EventArgs^ e) {
+	KursProjectTimetable::AddLessonForm^ addLessonForm = gcnew(KursProjectTimetable::AddLessonForm);
+	addLessonForm->ShowDialog();
+	if (addLessonForm->facultyNumber == -1 || addLessonForm->courseNumber == -1 || addLessonForm->groupNumber == -1 || addLessonForm->schoolDayNumber == -1 || addLessonForm->audienceNumber == -1 || addLessonForm->lessonNumber == -1 || addLessonForm->subjectName->Length == 0 || addLessonForm->teacherName->Length == 0) {
+		return;
+	};
+	addLesson(addLessonForm->facultyNumber, addLessonForm->courseNumber, addLessonForm->groupNumber, addLessonForm->schoolDayNumber, addLessonForm->subjectName, addLessonForm->teacherName, addLessonForm->lessonNumber, addLessonForm->audienceNumber);
 }
 };
 }

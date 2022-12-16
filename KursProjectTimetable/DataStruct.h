@@ -4,9 +4,23 @@
 #include "doubly_linked_list.h"
 
 struct Lesson {
-	std::string SubjectName;
+	std::string subjectName;
 	int audienceNumber;
-	std::string TeacherName;
+	std::string teacherName;
+	int lessonNumber;
+	Lesson() {};
+	Lesson(std::string subjectName, int audienceNumber, std::string teacherName, int lessonNumber) {
+		this->audienceNumber = audienceNumber;
+		this->lessonNumber = lessonNumber;
+		this->subjectName = subjectName;
+		this->teacherName = teacherName;
+	};
+	bool operator!=(Lesson other) {
+		return this->lessonNumber != other.lessonNumber;
+	}
+	bool operator>(Lesson other) {
+		return this->lessonNumber > other.lessonNumber;
+	}
 };
 struct SchoolDay {
 	std::string day;
@@ -15,6 +29,10 @@ struct SchoolDay {
 	SchoolDay(std::string day)
 	{
 		this->day = day;
+	}
+	SchoolDay(int numberOfWeekDay) {
+		std::string week[7] = { "Понедельник", "Вторник", "Среда", "Четверг", "Пятница", "Суббота", "Воскресенье" };
+		this->day = week[numberOfWeekDay-1];
 	}
 	bool operator!=(SchoolDay other) {
 		return this->day != other.day;
@@ -46,6 +64,9 @@ struct Group {
 	}
 	bool operator>(Group other) {
 		return this->number > other.number;
+	}
+	bool operator!=(Group other) {
+		return this->number != other.number;
 	}
 };
 struct Course {

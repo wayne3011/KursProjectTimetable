@@ -95,19 +95,20 @@ void KursProjectTimetable::MainForm::timetablePaint(int facultyNumber, int cours
 	schoolDay->BackColor = treeBox->BackColor;
 	treeBox->Controls->Add(schoolDay);
 	selectedsSchoolDay = SelectedSchoolDay(facultyNumber, courseNumber, groupNumber, faculties[facultyNumber].courses[courseNumber].groups[groupNumber].timetable.schoolDays[dayNumber]);
-	treeBox->Text = "Группа №" + groupNumber + " " + stoS(selectedsSchoolDay.selectedDay.day);
+	treeBox->Text = "Группа №" + (groupNumber+1) + " " + stoS(selectedsSchoolDay.selectedDay.day);
 	treeBox->Update();
 }
 System::Windows::Forms::TreeView^ schoolDayTreePaint(SchoolDay schoolDay) {
 	TreeView^ schoolDayTree = gcnew TreeView;
+	schoolDay.lessons.sort();
 	for (size_t i = 0; i < schoolDay.lessons.getSize(); i++)
 	{
 		TreeNode^ lesson = gcnew TreeNode;
-		lesson->Text = stoS(schoolDay.lessons[i].SubjectName);
+		lesson->Text = schoolDay.lessons[i].lessonNumber + "." + stoS(schoolDay.lessons[i].subjectName);
 		TreeNode^ audienceNumber = gcnew TreeNode;
 		audienceNumber->Text = "Аудитория №" + schoolDay.lessons[i].audienceNumber;
 		TreeNode^ teacherName = gcnew TreeNode;
-		teacherName->Text = "Имя преподавателя:" + stoS(schoolDay.lessons[i].TeacherName);
+		teacherName->Text = "Имя преподавателя:" + stoS(schoolDay.lessons[i].teacherName);
 		lesson->Nodes->Add(audienceNumber);
 		lesson->Nodes->Add(teacherName);
 		schoolDayTree->Nodes->Add(lesson);
@@ -125,7 +126,7 @@ void KursProjectTimetable::MainForm::nextDayPaint() {
 	schoolDay->BackColor = treeBox->BackColor;
 	treeBox->Controls->Add(schoolDay);
 	selectedsSchoolDay.selectedDay = nextSchoolDay;
-	treeBox->Text = "Группа №" + selectedsSchoolDay.groupNumber + " " + stoS(selectedsSchoolDay.selectedDay.day);
+	treeBox->Text = "Группа №" + (selectedsSchoolDay.groupNumber+1) + " " + stoS(selectedsSchoolDay.selectedDay.day);
 	treeBox->Update();
 }
 void KursProjectTimetable::MainForm::previousDayPaint() {
@@ -197,6 +198,114 @@ void KursProjectTimetable::MainForm::addGroup(int facultyNumber, int courseNumbe
 	course->groups.push_end(Group(groupNumber));
 	KursProjectTimetable::MainForm::facultiesListPaint();
 }
+void KursProjectTimetable::MainForm::addSchoolDayNumber(int facultyNumber, int courseNumber, int groupNumber, int schoolDayNumber) {
+	if (faculties.is_empty()) {
+		MessageBox::Show(this, "Отсутсвует список факультетов!");
+		return;
+	};
+
+	Faculty* faculty;
+	try
+	{
+		faculty = &faculties.getByValue(Faculty(facultyNumber));
+	}
+	catch (const std::exception&)
+	{
+		MessageBox::Show(this, "Неверный номер факультета!");
+		return;
+	}
+	if (faculty->courses.is_empty()) {
+		MessageBox::Show(this, "Отсутсвует список курсов факультета №" + facultyNumber + "!");
+		return;
+	}
+	Course* course;
+	try
+	{
+		course = &faculty->courses.getByValue(Course(courseNumber));
+	}
+	catch (const std::exception&)
+	{
+		MessageBox::Show(this, "Неверный номер курса!");
+		return;
+	}
+	if (course->groups.is_empty()) {
+		MessageBox::Show(this, "Отсутсвует список групп факультета №" + facultyNumber + " " + "курса №" + courseNumber);
+		return;
+	}
+	Group* group;
+	try
+	{
+		group = &course->groups.getByValue(Group(groupNumber));
+	}
+	catch (const std::exception&)
+	{
+		MessageBox::Show(this, "Неверный номер группы!");
+		return;
+	}
+	group->timetable.schoolDays.push_end(SchoolDay(schoolDayNumber));
+	KursProjectTimetable::MainForm::facultiesListPaint();
+}
+void KursProjectTimetable::MainForm::addLesson(int facultyNumber, int courseNumber, int groupNumber, int schoolDayNumber, System::String^ subjectName, System::String^ teacherName, int lessonNumber, int audienceNumber) {
+	if (faculties.is_empty()) {
+		MessageBox::Show(this, "Отсутсвует список факультетов!");
+		return;
+	};
+
+	Faculty* faculty;
+	try
+	{
+		faculty = &faculties.getByValue(Faculty(facultyNumber));
+	}
+	catch (const std::exception&)
+	{
+		MessageBox::Show(this, "Неверный номер факультета!");
+		return;
+	}
+	if (faculty->courses.is_empty()) {
+		MessageBox::Show(this, "Отсутсвует список курсов факультета №" + facultyNumber + "!");
+		return;
+	}
+	Course* course;
+	try
+	{
+		course = &faculty->courses.getByValue(Course(courseNumber));
+	}
+	catch (const std::exception&)
+	{
+		MessageBox::Show(this, "Неверный номер курса!");
+		return;
+	}
+	if (course->groups.is_empty()) {
+		MessageBox::Show(this, "Отсутсвует список групп факультета №" + facultyNumber + " " + "курса №" + courseNumber);
+		return;
+	}
+	Group* group;
+	try
+	{
+		group = &course->groups.getByValue(Group(groupNumber));
+	}
+	catch (const std::exception&)
+	{
+		MessageBox::Show(this, "Неверный номер группы!");
+		return;
+	}
+	if (group->timetable.schoolDays.is_empty()) {
+		MessageBox::Show(this, "Отсутсвует расписание группы №" + groupNumber + " Курса №" + courseNumber + " " + " Факультета №" + facultyNumber);
+		return;
+	}
+	SchoolDay* schoolDay;
+	try
+	{
+		schoolDay = &group->timetable.schoolDays.getByValue(SchoolDay(schoolDayNumber));
+	}
+	catch (const std::exception&)
+	{
+		MessageBox::Show(this, "Неверный номер дня недели!");
+		return;
+	}
+	schoolDay->lessons.push_end(Lesson(Stos(subjectName), audienceNumber, Stos(teacherName), lessonNumber));
+	KursProjectTimetable::MainForm::facultiesListPaint();
+}
 void jParse(nlohmann::json_abi_v3_11_2::json& j_complete, SLList<Faculty>& faculties)
 {
 	for (auto& j_faculty : j_complete.items())
@@ -222,15 +331,16 @@ void jParse(nlohmann::json_abi_v3_11_2::json& j_complete, SLList<Faculty>& facul
 					for (auto& j_lesson : j_timetable.value()["lessons"].items())
 					{
 						Lesson lesson;
+						lesson.lessonNumber = j_lesson.value()["lessonnumber"].get<int>();
 						lesson.audienceNumber = j_lesson.value()["audiencenumber"].get<int>();
-						lesson.SubjectName = j_lesson.value()["subjectname"].get<std::string>();
-						lesson.TeacherName = j_lesson.value()["teachername"].get<std::string>();
+						lesson.subjectName = j_lesson.value()["subjectname"].get<std::string>();
+						lesson.teacherName = j_lesson.value()["teachername"].get<std::string>();
 						lessons.push_end(lesson);
 					}
 					schoolDay.lessons = lessons;
 					schoolDays.push_end(schoolDay);
 				}
-				schoolDays.sort();
+				//schoolDays.sort();
 				timetable.schoolDays = schoolDays;
 				group.timetable = timetable;
 				groups.push_end(group);

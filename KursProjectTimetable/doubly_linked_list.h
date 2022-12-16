@@ -39,6 +39,14 @@ public:
 		if (!currentNode) throw std::exception("Element with this index does not exist");
 		return currentNode->data;
 	};
+	T& getByValue(T data) {
+		Node* currentNode = head;
+		while (currentNode->data != data && currentNode != 0) {
+			currentNode = currentNode->next;
+		}
+		if (!currentNode) throw std::exception("Element with this data does not exist");
+		return currentNode->data;
+	}
 	void pop_front();
 	void pop_back();
 	void removeByValue(T value);

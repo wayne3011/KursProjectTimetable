@@ -124,6 +124,8 @@
     <ClCompile Include="AddCourseForm.cpp" />
     <ClCompile Include="AddFacultyForm.cpp" />
     <ClCompile Include="AddGroupForm.cpp" />
+    <ClCompile Include="addLessonForm.cpp" />
+    <ClCompile Include="AddSchoolDayForm.cpp" />
     <ClCompile Include="DataStruct.cpp" />
     <ClCompile Include="MainForm.cpp" />
   </ItemGroup>
@@ -137,6 +139,10 @@
     <ClInclude Include="AddGroupForm.h">
       <FileType>CppForm</FileType>
     </ClInclude>
+    <ClInclude Include="AddLessonForm.h">
+      <FileType>CppForm</FileType>
+    </ClInclude>
+    <ClInclude Include="AddSchoolDayForm.h" />
     <ClInclude Include="circular_list.h" />
     <ClInclude Include="DataStruct.h" />
     <ClInclude Include="doubly_linked_list.h" />
@@ -157,6 +163,10 @@
     <EmbeddedResource Include="AddGroupForm.resx">
       <DependentUpon>AddGroupForm.h</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="AddLessonForm.resx">
+      <DependentUpon>AddLessonForm.h</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="AddSchoolDayForm.resx" />
     <EmbeddedResource Include="MainForm.resx">
       <DependentUpon>MainForm.h</DependentUpon>
     </EmbeddedResource>
