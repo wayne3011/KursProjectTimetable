@@ -41,11 +41,21 @@ public:
 	};
 	T& getByValue(T data) {
 		Node* currentNode = head;
-		while (currentNode->data != data && currentNode != 0) {
+		while (currentNode != 0 && currentNode->data != data) {
 			currentNode = currentNode->next;
 		}
 		if (!currentNode) throw std::exception("Element with this data does not exist");
 		return currentNode->data;
+	}
+	int getIndexByValue(T data) {
+		Node* currentNode = head;
+		int index = 0;
+		while (currentNode != 0 && currentNode->data != data) {
+			currentNode = currentNode->next;
+			index++;
+		}
+		if (!currentNode) throw std::exception("Element with this data does not exist");
+		return index;
 	}
 	void pop_front();
 	void pop_back();
@@ -110,7 +120,7 @@ inline void DLList<T>::removeByValue(T value)
 	if (head->data == value) return pop_front();
 	if (end->data == value) return pop_back();
 	Node* currentNode = head;
-	while (currentNode->data != value && currentNode) {
+	while (currentNode && currentNode->data != value) {
 		currentNode = currentNode->next;
 	}
 	if (!currentNode) throw std::exception("Element not found");

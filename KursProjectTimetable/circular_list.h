@@ -54,6 +54,16 @@ public:
 		if (iterator == size) throw std::exception("Element with this data does not exist");
 		return currentNode->data;
 	}
+	int getIndexByValue(T data) {
+		Node* currentNode = head;
+		int iterator = 0;
+		while (currentNode->data != data && iterator != size) {
+			currentNode = currentNode->next;
+			iterator++;
+		}
+		if (iterator == size) throw std::exception("Element with this data does not exist");
+		return iterator;
+	}
 	T getNext(T node) {
 		Node* current = head;
 		int iterator = 0;
@@ -123,6 +133,7 @@ inline void CircularList<T>::removeByValue(T value)
 	while (removableNode->data != value && removableNode != head) {
 		removableNode = removableNode->next;
 	}
+	if (removableNode == head) throw std::exception("Element with this count does not exist");
 	removableNode->next->previous = removableNode->previous;
 	removableNode->previous->next = removableNode->next;
 	delete removableNode;

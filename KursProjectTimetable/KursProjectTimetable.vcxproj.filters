@@ -24,20 +24,17 @@
     <ClCompile Include="DataStruct.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="AddCourseForm.cpp">
-      <Filter>Source Files\AddNodesForms</Filter>
+    <ClCompile Include="DeleteFacultyForm.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="AddFacultyForm.cpp">
-      <Filter>Source Files\AddNodesForms</Filter>
+    <ClCompile Include="deleteCourseForm.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="AddGroupForm.cpp">
-      <Filter>Source Files\AddNodesForms</Filter>
+    <ClCompile Include="DeleteGroupForm.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="AddSchoolDayForm.cpp">
-      <Filter>Source Files\AddNodesForms</Filter>
-    </ClCompile>
-    <ClCompile Include="addLessonForm.cpp">
-      <Filter>Source Files\AddNodesForms</Filter>
+    <ClCompile Include="DeleteLessonForm.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -75,6 +72,21 @@
       <Filter>Source Files</Filter>
     </ClInclude>
     <ClInclude Include="AddLessonForm.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="DeleteFacultyForm.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="DeleteCourseForm.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="DeleteGroupForm.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="DeleteSchoolDayForm.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="DeleteLessonForm.h">
       <Filter>Source Files</Filter>
     </ClInclude>
   </ItemGroup>

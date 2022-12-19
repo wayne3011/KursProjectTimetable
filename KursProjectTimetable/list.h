@@ -34,13 +34,21 @@ public:
 	}
 	T& getByValue(T data) {
 		Node* currentNode = head;
+		while (currentNode != 0 && currentNode->data != data) {
+			currentNode = currentNode->next;
+		}
+		if (!currentNode) throw std::exception("Element with this data does not exist");
+		return currentNode->data;
+	}
+	int getIndexByValue(T data) {
+		Node* currentNode = head;
 		int iterator = 0;
-		while (currentNode->data != data && currentNode != 0) {
+		while (currentNode != 0 && currentNode->data != data) {
 			currentNode = currentNode->next;
 			iterator++;
 		}
 		if (!currentNode) throw std::exception("Element with this data does not exist");
-		return currentNode->data;
+		return iterator;
 	}
 	int getSize() { return size; }
 	bool is_empty();

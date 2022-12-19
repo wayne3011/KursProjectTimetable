@@ -121,12 +121,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="AddCourseForm.cpp" />
-    <ClCompile Include="AddFacultyForm.cpp" />
-    <ClCompile Include="AddGroupForm.cpp" />
-    <ClCompile Include="addLessonForm.cpp" />
-    <ClCompile Include="AddSchoolDayForm.cpp" />
     <ClCompile Include="DataStruct.cpp" />
+    <ClCompile Include="deleteCourseForm.cpp" />
+    <ClCompile Include="DeleteFacultyForm.cpp" />
+    <ClCompile Include="DeleteGroupForm.cpp" />
+    <ClCompile Include="DeleteLessonForm.cpp" />
     <ClCompile Include="MainForm.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -145,6 +144,21 @@
     <ClInclude Include="AddSchoolDayForm.h" />
     <ClInclude Include="circular_list.h" />
     <ClInclude Include="DataStruct.h" />
+    <ClInclude Include="DeleteCourseForm.h">
+      <FileType>CppForm</FileType>
+    </ClInclude>
+    <ClInclude Include="DeleteFacultyForm.h">
+      <FileType>CppForm</FileType>
+    </ClInclude>
+    <ClInclude Include="DeleteGroupForm.h">
+      <FileType>CppForm</FileType>
+    </ClInclude>
+    <ClInclude Include="DeleteLessonForm.h">
+      <FileType>CppForm</FileType>
+    </ClInclude>
+    <ClInclude Include="DeleteSchoolDayForm.h">
+      <FileType>CppForm</FileType>
+    </ClInclude>
     <ClInclude Include="doubly_linked_list.h" />
     <ClInclude Include="json.hpp" />
     <ClInclude Include="list.h" />
@@ -167,6 +181,21 @@
       <DependentUpon>AddLessonForm.h</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="AddSchoolDayForm.resx" />
+    <EmbeddedResource Include="DeleteCourseForm.resx">
+      <DependentUpon>DeleteCourseForm.h</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="DeleteFacultyForm.resx">
+      <DependentUpon>DeleteFacultyForm.h</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="DeleteGroupForm.resx">
+      <DependentUpon>DeleteGroupForm.h</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="DeleteLessonForm.resx">
+      <DependentUpon>DeleteLessonForm.h</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="DeleteSchoolDayForm.resx">
+      <DependentUpon>DeleteSchoolDayForm.h</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="MainForm.resx">
       <DependentUpon>MainForm.h</DependentUpon>
     </EmbeddedResource>

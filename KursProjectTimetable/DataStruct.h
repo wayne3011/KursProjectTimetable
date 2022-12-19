@@ -15,24 +15,31 @@ struct Lesson {
 		this->subjectName = subjectName;
 		this->teacherName = teacherName;
 	};
+	Lesson(int lessonNumber) {
+		this->audienceNumber = -1;
+		this->lessonNumber = lessonNumber;
+		this->subjectName = "";
+		this->teacherName = "";
+	}
 	bool operator!=(Lesson other) {
 		return this->lessonNumber != other.lessonNumber;
 	}
 	bool operator>(Lesson other) {
 		return this->lessonNumber > other.lessonNumber;
 	}
+	bool operator==(Lesson other) {
+		return this->lessonNumber == other.lessonNumber;
+	}
 };
 struct SchoolDay {
 	std::string day;
 	SLList<Lesson> lessons;
 	SchoolDay() {};
-	SchoolDay(std::string day)
-	{
-		this->day = day;
-	}
+
 	SchoolDay(int numberOfWeekDay) {
 		std::string week[7] = { "Понедельник", "Вторник", "Среда", "Четверг", "Пятница", "Суббота", "Воскресенье" };
-		this->day = week[numberOfWeekDay-1];
+		if (numberOfWeekDay >= 0 && numberOfWeekDay < 7)this->day = week[numberOfWeekDay];
+		else this->day = "UNKNOWN";
 	}
 	bool operator!=(SchoolDay other) {
 		return this->day != other.day;
@@ -40,6 +47,9 @@ struct SchoolDay {
 	bool operator>(SchoolDay other) {
 		return this->day > other.day;
 	};
+	bool operator==(SchoolDay other) {
+		return this->day == other.day;
+	}
 };
 struct Timetable {
 	CircularList<SchoolDay> schoolDays;
@@ -68,6 +78,9 @@ struct Group {
 	bool operator!=(Group other) {
 		return this->number != other.number;
 	}
+	bool operator==(Group other) {
+		return this->number == other.number;
+	}
 };
 struct Course {
 	int number;
@@ -84,6 +97,9 @@ struct Course {
 	}
 	bool operator!=(Course other) {
 		return this->number != other.number;
+	}
+	bool operator==(Course other) {
+		return this->number == other.number;
 	}
 };
 struct Faculty

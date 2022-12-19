@@ -4,6 +4,11 @@
 #include "AddGroupForm.h"
 #include "AddSchoolDayForm.h"
 #include "AddLessonForm.h"
+#include "DeleteFacultyForm.h"
+#include "DeleteCourseForm.h"
+#include "DeleteGroupForm.h"
+#include "DeleteSchoolDayForm.h"
+#include "DeleteLessonForm.h"
 namespace KursProjectTimetable {
 
 	using namespace System;
@@ -57,6 +62,11 @@ namespace KursProjectTimetable {
 
 	private: System::Windows::Forms::Button^ addGroupButton;
 	private: System::Windows::Forms::Button^ addSchoolDay_button;
+	private: System::Windows::Forms::Button^ deleteLessonButton;
+	private: System::Windows::Forms::Button^ deleteSchoolDayButton;
+	private: System::Windows::Forms::Button^ deleteCourseButton;
+	private: System::Windows::Forms::Button^ deleteGroupButton;
+	private: System::Windows::Forms::Button^ deleteFacultyButton;
 
 
 
@@ -74,7 +84,7 @@ namespace KursProjectTimetable {
 		/// <summary>
 		/// Required designer variable.
 		/// </summary>
-		System::ComponentModel::Container ^components;
+		System::ComponentModel::Container^ components;
 #pragma region Windows Form Designer generated code
 		/// <summary>
 		/// Required method for Designer support - do not modify
@@ -85,6 +95,11 @@ namespace KursProjectTimetable {
 			this->loadDataButton = (gcnew System::Windows::Forms::Button());
 			this->tableLayoutPanel1 = (gcnew System::Windows::Forms::TableLayoutPanel());
 			this->controlElementBox = (gcnew System::Windows::Forms::GroupBox());
+			this->deleteLessonButton = (gcnew System::Windows::Forms::Button());
+			this->deleteSchoolDayButton = (gcnew System::Windows::Forms::Button());
+			this->deleteCourseButton = (gcnew System::Windows::Forms::Button());
+			this->deleteGroupButton = (gcnew System::Windows::Forms::Button());
+			this->deleteFacultyButton = (gcnew System::Windows::Forms::Button());
 			this->addSchoolDay_button = (gcnew System::Windows::Forms::Button());
 			this->addLessonButton = (gcnew System::Windows::Forms::Button());
 			this->addGroupButton = (gcnew System::Windows::Forms::Button());
@@ -131,6 +146,11 @@ namespace KursProjectTimetable {
 			// 
 			// controlElementBox
 			// 
+			this->controlElementBox->Controls->Add(this->deleteLessonButton);
+			this->controlElementBox->Controls->Add(this->deleteSchoolDayButton);
+			this->controlElementBox->Controls->Add(this->deleteCourseButton);
+			this->controlElementBox->Controls->Add(this->deleteGroupButton);
+			this->controlElementBox->Controls->Add(this->deleteFacultyButton);
 			this->controlElementBox->Controls->Add(this->addSchoolDay_button);
 			this->controlElementBox->Controls->Add(this->addLessonButton);
 			this->controlElementBox->Controls->Add(this->addGroupButton);
@@ -143,6 +163,56 @@ namespace KursProjectTimetable {
 			this->controlElementBox->TabIndex = 1;
 			this->controlElementBox->TabStop = false;
 			this->controlElementBox->Text = L"groupBox1";
+			// 
+			// deleteLessonButton
+			// 
+			this->deleteLessonButton->Location = System::Drawing::Point(155, 376);
+			this->deleteLessonButton->Name = L"deleteLessonButton";
+			this->deleteLessonButton->Size = System::Drawing::Size(142, 23);
+			this->deleteLessonButton->TabIndex = 12;
+			this->deleteLessonButton->Text = L"Удалить предмет";
+			this->deleteLessonButton->UseVisualStyleBackColor = true;
+			this->deleteLessonButton->Click += gcnew System::EventHandler(this, &MainForm::deleteLessonButton_Click);
+			// 
+			// deleteSchoolDayButton
+			// 
+			this->deleteSchoolDayButton->Location = System::Drawing::Point(155, 347);
+			this->deleteSchoolDayButton->Name = L"deleteSchoolDayButton";
+			this->deleteSchoolDayButton->Size = System::Drawing::Size(142, 23);
+			this->deleteSchoolDayButton->TabIndex = 11;
+			this->deleteSchoolDayButton->Text = L"Удалить учебный день";
+			this->deleteSchoolDayButton->UseVisualStyleBackColor = true;
+			this->deleteSchoolDayButton->Click += gcnew System::EventHandler(this, &MainForm::deleteSchoolDayButton_Click);
+			// 
+			// deleteCourseButton
+			// 
+			this->deleteCourseButton->Location = System::Drawing::Point(155, 287);
+			this->deleteCourseButton->Name = L"deleteCourseButton";
+			this->deleteCourseButton->Size = System::Drawing::Size(142, 23);
+			this->deleteCourseButton->TabIndex = 10;
+			this->deleteCourseButton->Text = L"Удалить курс";
+			this->deleteCourseButton->UseVisualStyleBackColor = true;
+			this->deleteCourseButton->Click += gcnew System::EventHandler(this, &MainForm::deleteCourseButton_Click);
+			// 
+			// deleteGroupButton
+			// 
+			this->deleteGroupButton->Location = System::Drawing::Point(155, 318);
+			this->deleteGroupButton->Name = L"deleteGroupButton";
+			this->deleteGroupButton->Size = System::Drawing::Size(142, 23);
+			this->deleteGroupButton->TabIndex = 9;
+			this->deleteGroupButton->Text = L"Удалить группу";
+			this->deleteGroupButton->UseVisualStyleBackColor = true;
+			this->deleteGroupButton->Click += gcnew System::EventHandler(this, &MainForm::deleteGroupButton_Click);
+			// 
+			// deleteFacultyButton
+			// 
+			this->deleteFacultyButton->Location = System::Drawing::Point(155, 257);
+			this->deleteFacultyButton->Name = L"deleteFacultyButton";
+			this->deleteFacultyButton->Size = System::Drawing::Size(142, 23);
+			this->deleteFacultyButton->TabIndex = 8;
+			this->deleteFacultyButton->Text = L"Удалить факультет";
+			this->deleteFacultyButton->UseVisualStyleBackColor = true;
+			this->deleteFacultyButton->Click += gcnew System::EventHandler(this, &MainForm::deleteFacultyButton_Click);
 			// 
 			// addSchoolDay_button
 			// 
@@ -251,93 +321,143 @@ namespace KursProjectTimetable {
 		void nextDayPaint();
 		void previousDayPaint();
 		void addFaculty(int facultyNumber);
+		void deleteFaculty(int facultyNumber);
+		void deleteCourse(int facultyNumber, int courseNumber);
 		void addCourse(int facultyNumber, int courseNumber);
+		void deleteGroup(int facultyNumber, int courseNumber, int groupNumber);
 		void addGroup(int facultyNumber, int courseNumber, int groupNumber);
-		void addSchoolDayNumber(int facultyNumber, int courseNumber, int groupNumber, int schoolDayNumber);
+		void addSchoolDay(int facultyNumber, int courseNumber, int groupNumber, int schoolDayNumber);
+
+		void deleteSchoolDay(int facultyNumber, int courseNumber, int groupNumber, int schoolDayNumber);
 
 		void addLesson(int facultyNumber, int courseNumber, int groupNumber, int schoolDayNumber, System::String^ subjectName, System::String^ teacherName, int lessonNumber, int audienceNumber);
 
-	
+		void deleteLesson(int facultyNumber, int courseNumber, int groupNumber, int schoolDayNumber, int lessonNumber);
+
 		
-		private: System::Void loadDataButton_Click(System::Object^ sender, System::EventArgs^ e) {
+
+
+
+	private: System::Void loadDataButton_Click(System::Object^ sender, System::EventArgs^ e) {
 		OpenFileDialog openFileDialog;
 		openFileDialog.Filter = "JSON (.json)|*.json";
 		if (openFileDialog.ShowDialog() == Windows::Forms::DialogResult::OK) {
-			
+
 			this->tableLayoutPanel1->Controls->RemoveByKey("tabControl");
 			loadFromFile(openFileDialog.FileName);
 			this->tableLayoutPanel1->Update();
 		}
 
 		else return this->tableLayoutPanel1->Controls->RemoveByKey("tabControl");
+	}
+	private: System::Void tableLayoutPanel1_Paint(System::Object^ sender, System::Windows::Forms::PaintEventArgs^ e) {
+	}
+	private: System::Void treeView_NodeClick(System::Object^ sender, System::Windows::Forms::TreeNodeMouseClickEventArgs^ e) {
+		if (e->Node->Name == "WeekDay") {
+			this->treeBox->Controls->RemoveByKey("schoolDayTree");
+			timetablePaint(e->Node->TreeView->Parent->TabIndex, e->Node->Parent->Parent->Index, e->Node->Parent->Index, e->Node->Index);
+			treeBox->Update();
+		};
+	}
+	private: System::Void buttonPrevious_Click(System::Object^ sender, System::EventArgs^ e) {
+		if (!this->treeBox->Controls->ContainsKey("schoolDayTree")) return;
+		this->treeBox->Controls->RemoveByKey("schoolDayTree");
+		previousDayPaint();
+		controlElementBox->Update();
+	}
+	private: System::Void buttonNext_Click(System::Object^ sender, System::EventArgs^ e) {
+		if (!this->treeBox->Controls->ContainsKey("schoolDayTree")) return;
+		this->treeBox->Controls->RemoveByKey("schoolDayTree");
+		nextDayPaint();
+		controlElementBox->Update();
+	}
+	private: System::Void addFacultyButton_Click(System::Object^ sender, System::EventArgs^ e) {
+		AddFacultyForm^ addFacultyForm = gcnew(KursProjectTimetable::AddFacultyForm);
+
+		addFacultyForm->ShowDialog();
+
+		if (addFacultyForm->facultyNumber == -1) {
+			return;
 		}
-		private: System::Void tableLayoutPanel1_Paint(System::Object^ sender, System::Windows::Forms::PaintEventArgs^ e) {
+		addFaculty(addFacultyForm->facultyNumber);
+
+	}
+
+
+	private: System::Void addCourseButton_Click(System::Object^ sender, System::EventArgs^ e) {
+		KursProjectTimetable::AddCourseForm^ addCourseForm = gcnew(KursProjectTimetable::AddCourseForm);
+		addCourseForm->ShowDialog();
+		if (addCourseForm->facultyNumber == -1 || addCourseForm->facultyNumber == -1) {
+			return;
 		}
-		private: System::Void treeView_NodeClick(System::Object^ sender, System::Windows::Forms::TreeNodeMouseClickEventArgs ^ e) {
-			if (e->Node->Nodes->Count == 0) {
-				this->treeBox->Controls->RemoveByKey("schoolDayTree");
-				timetablePaint(e->Node->TreeView->Parent->TabIndex, e->Node->Parent->Parent->Index, e->Node->Parent->Index, e->Node->Index);
-				treeBox->Update();
-			};
+		addCourse(addCourseForm->facultyNumber, addCourseForm->courseNumber);
+
+	}
+	private: System::Void addGroupButton_Click(System::Object^ sender, System::EventArgs^ e) {
+		KursProjectTimetable::AddGroupForm^ addGroupForm = gcnew(KursProjectTimetable::AddGroupForm);
+		addGroupForm->ShowDialog();
+		if (addGroupForm->facultyNumber == -1 || addGroupForm->groupNumber == -1 || addGroupForm->courseNumber == -1) {
+			return;
 		}
-private: System::Void buttonPrevious_Click(System::Object^ sender, System::EventArgs^ e) {
-	if (!this->treeBox->Controls->ContainsKey("schoolDayTree")) return;
-	this->treeBox->Controls->RemoveByKey("schoolDayTree");
-	previousDayPaint();
-	controlElementBox->Update();
-}
-private: System::Void buttonNext_Click(System::Object^ sender, System::EventArgs^ e) {
-	if (!this->treeBox->Controls->ContainsKey("schoolDayTree")) return;
-	this->treeBox->Controls->RemoveByKey("schoolDayTree");
-	nextDayPaint();
-	controlElementBox->Update();
-}
-private: System::Void addFacultyButton_Click(System::Object^ sender, System::EventArgs^ e) {
-	AddFacultyForm^ addFacultyForm = gcnew (KursProjectTimetable::AddFacultyForm);
-	
-	addFacultyForm->ShowDialog();
-
-	if (addFacultyForm->facultyNumber == -1) {
-		return;
+		addGroup(addGroupForm->facultyNumber, addGroupForm->courseNumber, addGroupForm->groupNumber);
 	}
-	addFaculty(addFacultyForm->facultyNumber);
-	
-}
-
-
-private: System::Void addCourseButton_Click(System::Object^ sender, System::EventArgs^ e) {
-	KursProjectTimetable::AddCourseForm^ addCourseForm = gcnew(KursProjectTimetable::AddCourseForm);
-	addCourseForm->ShowDialog();
-	if (addCourseForm->facultyNumber == -1 || addCourseForm->facultyNumber == -1) {
-		return;
+	private: System::Void addSchoolDay_button_Click(System::Object^ sender, System::EventArgs^ e) {
+		KursProjectTimetable::AddSchoolDayForm^ addSchoolDayForm = gcnew(KursProjectTimetable::AddSchoolDayForm);
+		addSchoolDayForm->ShowDialog();
+		if (addSchoolDayForm->facultyNumber == -1 || addSchoolDayForm->courseNumber == -1 || addSchoolDayForm->groupNumber == -1 || addSchoolDayForm->schoolDayNumber == -1) {
+			return;
+		}
+		addSchoolDay(addSchoolDayForm->facultyNumber, addSchoolDayForm->courseNumber, addSchoolDayForm->groupNumber, addSchoolDayForm->schoolDayNumber);
 	}
-	addCourse(addCourseForm->facultyNumber, addCourseForm->courseNumber);
-	
-}
-private: System::Void addGroupButton_Click(System::Object^ sender, System::EventArgs^ e) {
-	KursProjectTimetable::AddGroupForm^ addGroupForm = gcnew(KursProjectTimetable::AddGroupForm);
-	addGroupForm->ShowDialog();
-	if (addGroupForm->facultyNumber == -1 || addGroupForm->groupNumber == -1 || addGroupForm->courseNumber == -1) {
-		return;
-	}
-	addGroup(addGroupForm->facultyNumber, addGroupForm->courseNumber, addGroupForm->groupNumber);
-}
-private: System::Void addSchoolDay_button_Click(System::Object^ sender, System::EventArgs^ e) {
-	KursProjectTimetable::AddSchoolDayForm^ addSchoolDayForm = gcnew(KursProjectTimetable::AddSchoolDayForm);
-	addSchoolDayForm->ShowDialog();
-	if (addSchoolDayForm->facultyNumber == -1 || addSchoolDayForm->courseNumber == -1 || addSchoolDayForm->groupNumber == -1 || addSchoolDayForm->schoolDayNumber == -1) {
-		return;
-	}
-	addSchoolDayNumber(addSchoolDayForm->facultyNumber, addSchoolDayForm->courseNumber, addSchoolDayForm->groupNumber, addSchoolDayForm->schoolDayNumber);
-}
 
-private: System::Void addLessonButton_Click(System::Object^ sender, System::EventArgs^ e) {
-	KursProjectTimetable::AddLessonForm^ addLessonForm = gcnew(KursProjectTimetable::AddLessonForm);
-	addLessonForm->ShowDialog();
-	if (addLessonForm->facultyNumber == -1 || addLessonForm->courseNumber == -1 || addLessonForm->groupNumber == -1 || addLessonForm->schoolDayNumber == -1 || addLessonForm->audienceNumber == -1 || addLessonForm->lessonNumber == -1 || addLessonForm->subjectName->Length == 0 || addLessonForm->teacherName->Length == 0) {
-		return;
+	private: System::Void addLessonButton_Click(System::Object^ sender, System::EventArgs^ e) {
+		KursProjectTimetable::AddLessonForm^ addLessonForm = gcnew(KursProjectTimetable::AddLessonForm);
+		addLessonForm->ShowDialog();
+		if (addLessonForm->facultyNumber == -1 || addLessonForm->courseNumber == -1 || addLessonForm->groupNumber == -1 || addLessonForm->schoolDayNumber == -1 || addLessonForm->audienceNumber == -1 || addLessonForm->lessonNumber == -1 || addLessonForm->subjectName->Length == 0 || addLessonForm->teacherName->Length == 0) {
+			return;
+		};
+		addLesson(addLessonForm->facultyNumber, addLessonForm->courseNumber, addLessonForm->groupNumber, addLessonForm->schoolDayNumber, addLessonForm->subjectName, addLessonForm->teacherName, addLessonForm->lessonNumber, addLessonForm->audienceNumber);
+	}
+	private: System::Void deleteFacultyButton_Click(System::Object^ sender, System::EventArgs^ e) {
+		KursProjectTimetable::DeleteFacultyForm^ deleteFacultyForm = gcnew(KursProjectTimetable::DeleteFacultyForm);
+		deleteFacultyForm->ShowDialog();
+
+		if (deleteFacultyForm->facultyNumber == -1) {
+			return;
+		}
+		deleteFaculty(deleteFacultyForm->facultyNumber);
+	}
+	private: System::Void deleteCourseButton_Click(System::Object^ sender, System::EventArgs^ e) {
+		KursProjectTimetable::DeleteCourseForm^ deleteCourseForm = gcnew(KursProjectTimetable::DeleteCourseForm);
+		deleteCourseForm->ShowDialog();
+		if (deleteCourseForm->facultyNumber == -1 || deleteCourseForm->facultyNumber == -1) {
+			return;
+		}
+		deleteCourse(deleteCourseForm->facultyNumber, deleteCourseForm->courseNumber);
+	}
+	private: System::Void deleteGroupButton_Click(System::Object^ sender, System::EventArgs^ e) {
+		KursProjectTimetable::DeleteGroupForm^ deleteGroupForm = gcnew(KursProjectTimetable::DeleteGroupForm);
+		deleteGroupForm->ShowDialog();
+		if (deleteGroupForm->facultyNumber == -1 || deleteGroupForm->groupNumber == -1 || deleteGroupForm->courseNumber == -1) {
+			return;
+		};
+		deleteGroup(deleteGroupForm->facultyNumber, deleteGroupForm->courseNumber, deleteGroupForm->groupNumber);
 	};
-	addLesson(addLessonForm->facultyNumber, addLessonForm->courseNumber, addLessonForm->groupNumber, addLessonForm->schoolDayNumber, addLessonForm->subjectName, addLessonForm->teacherName, addLessonForm->lessonNumber, addLessonForm->audienceNumber);
+	private: System::Void deleteSchoolDayButton_Click(System::Object^ sender, System::EventArgs^ e) {
+		KursProjectTimetable::DeleteSchoolDayForm^ deleteSchoolDayForm = gcnew(KursProjectTimetable::DeleteSchoolDayForm);
+		deleteSchoolDayForm->ShowDialog();
+		if (deleteSchoolDayForm->facultyNumber == -1 || deleteSchoolDayForm->courseNumber == -1 || deleteSchoolDayForm->groupNumber == -1 || deleteSchoolDayForm->schoolDayNumber == -1) {
+			return;
+		}
+		deleteSchoolDay(deleteSchoolDayForm->facultyNumber, deleteSchoolDayForm->courseNumber, deleteSchoolDayForm->groupNumber, deleteSchoolDayForm->schoolDayNumber);
+	}
+private: System::Void deleteLessonButton_Click(System::Object^ sender, System::EventArgs^ e) {
+	KursProjectTimetable::DeleteLessonForm^ deleteLessonForm = gcnew(KursProjectTimetable::DeleteLessonForm);
+	deleteLessonForm->ShowDialog();
+	if (deleteLessonForm->facultyNumber == -1 || deleteLessonForm->courseNumber == -1 || deleteLessonForm->groupNumber == -1 || deleteLessonForm->schoolDayNumber == -1 || deleteLessonForm->lessonNumber == -1) {
+		return;
+	}
+	deleteLesson(deleteLessonForm->facultyNumber, deleteLessonForm->courseNumber, deleteLessonForm->groupNumber, deleteLessonForm->schoolDayNumber-1, deleteLessonForm->lessonNumber);
 }
 };
-}
+}; 
