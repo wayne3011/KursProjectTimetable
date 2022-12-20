@@ -88,6 +88,7 @@ public:
 	void removeByValue(T value);
 	void clear();
 	void sort();
+	
 private:
 	Node* head = 0;
 	int size = 0;
@@ -97,6 +98,7 @@ template<typename T>
 void CircularList<T>::push_end(T data)
 {
 	if (!head) {
+		
 		head = new Node(data);
 		size++;
 		return;

@@ -34,18 +34,26 @@ struct Lesson {
 struct SchoolDay {
 	std::string day;
 	SLList<Lesson> lessons;
-	SchoolDay() {};
+	int numberWeekDay = -1;
+	SchoolDay() {
+		day = "";
+		lessons = SLList<Lesson>();
+	};
 
 	SchoolDay(int numberOfWeekDay) {
 		std::string week[7] = { "Понедельник", "Вторник", "Среда", "Четверг", "Пятница", "Суббота", "Воскресенье" };
-		if (numberOfWeekDay >= 0 && numberOfWeekDay < 7)this->day = week[numberOfWeekDay];
+		if (numberOfWeekDay >= 0 && numberOfWeekDay < 7) {
+			this->day = week[numberOfWeekDay];
+			this->numberWeekDay = numberOfWeekDay;
+		}
+			
 		else this->day = "UNKNOWN";
 	}
 	bool operator!=(SchoolDay other) {
 		return this->day != other.day;
 	}
 	bool operator>(SchoolDay other) {
-		return this->day > other.day;
+		return this->numberWeekDay > other.numberWeekDay;
 	};
 	bool operator==(SchoolDay other) {
 		return this->day == other.day;

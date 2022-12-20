@@ -45,6 +45,51 @@ void KursProjectTimetable::MainForm::loadFromFile(String^ fileName)
 	jParse(j_complete, faculties);
 	facultiesListPaint();
 }
+void KursProjectTimetable::MainForm::outInFile(String^ path) {
+	std::ofstream fout(Stos(path));
+	nlohmann::ordered_json json_faculties = nlohmann::ordered_json();
+
+	for (size_t i = 0; i < faculties.getSize(); i++)
+	{
+		nlohmann::ordered_json json_faculty = nlohmann::ordered_json();
+
+		json_faculty["facultynumber"] = faculties[i].number;
+		nlohmann::ordered_json json_courses;
+
+		for (size_t j = 0; j < faculties[i].courses.getSize(); j++)
+		{
+			nlohmann::json json_course;
+			json_course["coursenumber"] = faculties[i].courses[j].number;
+			nlohmann::ordered_json json_groups;
+			for (size_t k = faculties[i].courses[j].groups.getSize() - 1; k != -1; k--)
+			{
+				nlohmann::json json_group;
+				json_group["groupnumber"] = faculties[i].courses[j].groups[k].number;
+				nlohmann::json json_timetable;
+				for (size_t l = 0; l < faculties[i].courses[j].groups[k].timetable.schoolDays.GetSize(); l++)
+				{
+					nlohmann::json json_schoolDay;
+					json_schoolDay["day"] = cp2utf(faculties[i].courses[j].groups[k].timetable.schoolDays[l].day.c_str());
+					for (size_t f = 0; f < faculties[i].courses[j].groups[k].timetable.schoolDays[l].lessons.getSize(); f++)
+					{
+						nlohmann::ordered_json json_lesson;
+						json_lesson["audiencenumber"] = faculties[i].courses[j].groups[k].timetable.schoolDays[l].lessons[f].audienceNumber;
+						json_lesson["subjectname"] = cp2utf(faculties[i].courses[j].groups[k].timetable.schoolDays[l].lessons[f].subjectName.c_str());
+						json_lesson["teachername"] = cp2utf(faculties[i].courses[j].groups[k].timetable.schoolDays[l].lessons[f].teacherName.c_str());
+						json_lesson["lessonnumber"] = faculties[i].courses[j].groups[k].timetable.schoolDays[l].lessons[f].lessonNumber;
+						json_schoolDay["lessons"].push_back(json_lesson);
+					}
+					json_group["timetable"].push_back(json_schoolDay);
+				}
+				json_course["groups"].push_back(json_group);
+			}
+			json_faculty["courses"].push_back(json_course);
+		}
+		json_faculties.push_back(json_faculty);
+	}
+	fout << json_faculties;
+	fout.close();
+}
 void KursProjectTimetable::MainForm::facultiesListPaint()
 {
 	faculties.sort();
@@ -550,21 +595,23 @@ void jParse(nlohmann::json_abi_v3_11_2::json& j_complete, SLList<Faculty>& facul
 				for (auto& j_timetable : j_group.value()["timetable"].items())
 				{
 					SchoolDay schoolDay;
-					schoolDay.day = UTF8to1251(j_timetable.value()["day"].get<std::string>());
+					schoolDay.day = utf2cp(j_timetable.value()["day"].get<std::string>());
 					SLList<Lesson> lessons;
 					for (auto& j_lesson : j_timetable.value()["lessons"].items())
 					{
 						Lesson lesson;
 						lesson.lessonNumber = j_lesson.value()["lessonnumber"].get<int>();
 						lesson.audienceNumber = j_lesson.value()["audiencenumber"].get<int>();
-						lesson.subjectName = j_lesson.value()["subjectname"].get<std::string>();
-						lesson.teacherName = j_lesson.value()["teachername"].get<std::string>();
+						lesson.subjectName = utf2cp(j_lesson.value()["subjectname"].get<std::string>());
+						lesson.teacherName = utf2cp(j_lesson.value()["teachername"].get<std::string>());
 						lessons.push_end(lesson);
 					}
+					
 					schoolDay.lessons = lessons;
 					schoolDays.push_end(schoolDay);
+					lessons.~SLList();
 				}
-				//schoolDays.sort();
+				schoolDays.sort();
 				timetable.schoolDays = schoolDays;
 				group.timetable = timetable;
 				groups.push_end(group);

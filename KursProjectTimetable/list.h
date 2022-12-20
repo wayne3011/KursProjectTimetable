@@ -57,6 +57,13 @@ public:
 	void removeByValue(T value);
 	void sort();
 	void clear();
+
+	//SLList<T> operator=(SLList<T>& other) {
+	//	this->size = other.size;
+	//	this->head = other.head;
+	//	this->end = other.end; 
+	//	return *this;
+	//}
 	
 private:
 	Node* getNodeAt(int index) {

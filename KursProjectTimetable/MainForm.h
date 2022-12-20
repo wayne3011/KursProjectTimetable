@@ -67,6 +67,10 @@ namespace KursProjectTimetable {
 	private: System::Windows::Forms::Button^ deleteCourseButton;
 	private: System::Windows::Forms::Button^ deleteGroupButton;
 	private: System::Windows::Forms::Button^ deleteFacultyButton;
+	private: System::Windows::Forms::GroupBox^ fileManagerBox;
+	private: System::Windows::Forms::Button^ outInFileButton;
+
+
 
 
 
@@ -108,18 +112,21 @@ namespace KursProjectTimetable {
 			this->treeBox = (gcnew System::Windows::Forms::GroupBox());
 			this->buttonNext = (gcnew System::Windows::Forms::Button());
 			this->buttonPrevious = (gcnew System::Windows::Forms::Button());
+			this->fileManagerBox = (gcnew System::Windows::Forms::GroupBox());
+			this->outInFileButton = (gcnew System::Windows::Forms::Button());
 			this->tableLayoutPanel1->SuspendLayout();
 			this->controlElementBox->SuspendLayout();
 			this->treeBox->SuspendLayout();
+			this->fileManagerBox->SuspendLayout();
 			this->SuspendLayout();
 			// 
 			// loadDataButton
 			// 
 			this->loadDataButton->Anchor = System::Windows::Forms::AnchorStyles::Left;
 			this->loadDataButton->AutoSize = true;
-			this->loadDataButton->Location = System::Drawing::Point(3, 6);
+			this->loadDataButton->Location = System::Drawing::Point(0, 0);
 			this->loadDataButton->Name = L"loadDataButton";
-			this->loadDataButton->Size = System::Drawing::Size(132, 32);
+			this->loadDataButton->Size = System::Drawing::Size(132, 40);
 			this->loadDataButton->TabIndex = 0;
 			this->loadDataButton->Text = L"Загрузить расписание";
 			this->loadDataButton->UseVisualStyleBackColor = true;
@@ -133,8 +140,8 @@ namespace KursProjectTimetable {
 				64.4186F)));
 			this->tableLayoutPanel1->ColumnStyles->Add((gcnew System::Windows::Forms::ColumnStyle(System::Windows::Forms::SizeType::Percent,
 				35.58139F)));
-			this->tableLayoutPanel1->Controls->Add(this->loadDataButton, 0, 0);
 			this->tableLayoutPanel1->Controls->Add(this->controlElementBox, 1, 1);
+			this->tableLayoutPanel1->Controls->Add(this->fileManagerBox, 0, 0);
 			this->tableLayoutPanel1->Location = System::Drawing::Point(12, 2);
 			this->tableLayoutPanel1->Name = L"tableLayoutPanel1";
 			this->tableLayoutPanel1->RowCount = 2;
@@ -299,6 +306,26 @@ namespace KursProjectTimetable {
 			this->buttonPrevious->UseVisualStyleBackColor = true;
 			this->buttonPrevious->Click += gcnew System::EventHandler(this, &MainForm::buttonPrevious_Click);
 			// 
+			// fileManagerBox
+			// 
+			this->fileManagerBox->Controls->Add(this->outInFileButton);
+			this->fileManagerBox->Controls->Add(this->loadDataButton);
+			this->fileManagerBox->Location = System::Drawing::Point(3, 3);
+			this->fileManagerBox->Name = L"fileManagerBox";
+			this->fileManagerBox->Size = System::Drawing::Size(270, 39);
+			this->fileManagerBox->TabIndex = 2;
+			this->fileManagerBox->TabStop = false;
+			// 
+			// outInFileButton
+			// 
+			this->outInFileButton->Location = System::Drawing::Point(138, 0);
+			this->outInFileButton->Name = L"outInFileButton";
+			this->outInFileButton->Size = System::Drawing::Size(132, 40);
+			this->outInFileButton->TabIndex = 1;
+			this->outInFileButton->Text = L"Сохранить распиасние";
+			this->outInFileButton->UseVisualStyleBackColor = true;
+			this->outInFileButton->Click += gcnew System::EventHandler(this, &MainForm::outInFileButton_Click);
+			// 
 			// MainForm
 			// 
 			this->AutoScaleDimensions = System::Drawing::SizeF(6, 13);
@@ -308,14 +335,16 @@ namespace KursProjectTimetable {
 			this->Name = L"MainForm";
 			this->Text = L"MainForm";
 			this->tableLayoutPanel1->ResumeLayout(false);
-			this->tableLayoutPanel1->PerformLayout();
 			this->controlElementBox->ResumeLayout(false);
 			this->treeBox->ResumeLayout(false);
+			this->fileManagerBox->ResumeLayout(false);
+			this->fileManagerBox->PerformLayout();
 			this->ResumeLayout(false);
 
 		}
 #pragma endregion
 		void loadFromFile(String^ fileName);
+		void outInFile(String^ path);
 		void facultiesListPaint();
 		void timetablePaint(int facultyNumber, int courseNumber, int groupNumber, int dayNumber);
 		void nextDayPaint();
@@ -349,6 +378,14 @@ namespace KursProjectTimetable {
 		}
 
 		else return this->tableLayoutPanel1->Controls->RemoveByKey("tabControl");
+	}
+	private: System::Void outInFileButton_Click(System::Object^ sender, System::EventArgs^ e) {
+		SaveFileDialog selectedFile;
+		selectedFile.Filter = "JSON (.json)|*.json";
+		selectedFile.DefaultExt = ".json";
+		if (selectedFile.ShowDialog() == Windows::Forms::DialogResult::OK) {
+			outInFile(selectedFile.FileName);
+		}
 	}
 	private: System::Void tableLayoutPanel1_Paint(System::Object^ sender, System::Windows::Forms::PaintEventArgs^ e) {
 	}
@@ -459,5 +496,6 @@ private: System::Void deleteLessonButton_Click(System::Object^ sender, System::E
 	}
 	deleteLesson(deleteLessonForm->facultyNumber, deleteLessonForm->courseNumber, deleteLessonForm->groupNumber, deleteLessonForm->schoolDayNumber-1, deleteLessonForm->lessonNumber);
 }
+
 };
 }; 

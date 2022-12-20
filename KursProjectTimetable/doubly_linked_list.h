@@ -62,6 +62,7 @@ public:
 	void removeByValue(T value);
 	void clear();
 	void sort();
+	
 private:
 	Node* head = 0;
 	Node* end = 0;
