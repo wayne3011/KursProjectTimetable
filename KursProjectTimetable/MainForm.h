@@ -356,11 +356,8 @@ namespace KursProjectTimetable {
 		void deleteGroup(int facultyNumber, int courseNumber, int groupNumber);
 		void addGroup(int facultyNumber, int courseNumber, int groupNumber);
 		void addSchoolDay(int facultyNumber, int courseNumber, int groupNumber, int schoolDayNumber);
-
 		void deleteSchoolDay(int facultyNumber, int courseNumber, int groupNumber, int schoolDayNumber);
-
 		void addLesson(int facultyNumber, int courseNumber, int groupNumber, int schoolDayNumber, System::String^ subjectName, System::String^ teacherName, int lessonNumber, int audienceNumber);
-
 		void deleteLesson(int facultyNumber, int courseNumber, int groupNumber, int schoolDayNumber, int lessonNumber);
 
 		
@@ -444,7 +441,7 @@ namespace KursProjectTimetable {
 		if (addSchoolDayForm->facultyNumber == -1 || addSchoolDayForm->courseNumber == -1 || addSchoolDayForm->groupNumber == -1 || addSchoolDayForm->schoolDayNumber == -1) {
 			return;
 		}
-		addSchoolDay(addSchoolDayForm->facultyNumber, addSchoolDayForm->courseNumber, addSchoolDayForm->groupNumber, addSchoolDayForm->schoolDayNumber);
+		addSchoolDay(addSchoolDayForm->facultyNumber, addSchoolDayForm->courseNumber, addSchoolDayForm->groupNumber, addSchoolDayForm->schoolDayNumber-1);
 	}
 
 	private: System::Void addLessonButton_Click(System::Object^ sender, System::EventArgs^ e) {
@@ -453,7 +450,7 @@ namespace KursProjectTimetable {
 		if (addLessonForm->facultyNumber == -1 || addLessonForm->courseNumber == -1 || addLessonForm->groupNumber == -1 || addLessonForm->schoolDayNumber == -1 || addLessonForm->audienceNumber == -1 || addLessonForm->lessonNumber == -1 || addLessonForm->subjectName->Length == 0 || addLessonForm->teacherName->Length == 0) {
 			return;
 		};
-		addLesson(addLessonForm->facultyNumber, addLessonForm->courseNumber, addLessonForm->groupNumber, addLessonForm->schoolDayNumber, addLessonForm->subjectName, addLessonForm->teacherName, addLessonForm->lessonNumber, addLessonForm->audienceNumber);
+		addLesson(addLessonForm->facultyNumber, addLessonForm->courseNumber, addLessonForm->groupNumber, addLessonForm->schoolDayNumber-1, addLessonForm->subjectName, addLessonForm->teacherName, addLessonForm->lessonNumber, addLessonForm->audienceNumber);
 	}
 	private: System::Void deleteFacultyButton_Click(System::Object^ sender, System::EventArgs^ e) {
 		KursProjectTimetable::DeleteFacultyForm^ deleteFacultyForm = gcnew(KursProjectTimetable::DeleteFacultyForm);
@@ -486,7 +483,7 @@ namespace KursProjectTimetable {
 		if (deleteSchoolDayForm->facultyNumber == -1 || deleteSchoolDayForm->courseNumber == -1 || deleteSchoolDayForm->groupNumber == -1 || deleteSchoolDayForm->schoolDayNumber == -1) {
 			return;
 		}
-		deleteSchoolDay(deleteSchoolDayForm->facultyNumber, deleteSchoolDayForm->courseNumber, deleteSchoolDayForm->groupNumber, deleteSchoolDayForm->schoolDayNumber);
+		deleteSchoolDay(deleteSchoolDayForm->facultyNumber, deleteSchoolDayForm->courseNumber, deleteSchoolDayForm->groupNumber, deleteSchoolDayForm->schoolDayNumber-1);
 	}
 private: System::Void deleteLessonButton_Click(System::Object^ sender, System::EventArgs^ e) {
 	KursProjectTimetable::DeleteLessonForm^ deleteLessonForm = gcnew(KursProjectTimetable::DeleteLessonForm);

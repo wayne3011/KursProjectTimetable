@@ -197,6 +197,7 @@ void KursProjectTimetable::MainForm::addFaculty(int facultyNumber) {
 	Faculty faculty;
 	faculty.number = facultyNumber;
 	faculties.push_end(faculty);
+	faculties.sort();
 	KursProjectTimetable::MainForm::facultiesListPaint();
 }
 void KursProjectTimetable::MainForm::deleteFaculty(int facultyNumber) {
@@ -207,6 +208,7 @@ void KursProjectTimetable::MainForm::deleteFaculty(int facultyNumber) {
 	try
 	{
 		faculties.removeByValue(Faculty(facultyNumber));
+		faculties.sort();
 	}
 	catch (const std::exception&)
 	{
@@ -234,6 +236,7 @@ void KursProjectTimetable::MainForm::deleteCourse(int facultyNumber, int courseN
 	try
 	{
 		faculty.courses.removeByValue(Course(courseNumber));
+		faculty.courses.sort();
 	}
 	catch (const std::exception&)
 	{
@@ -248,14 +251,17 @@ void KursProjectTimetable::MainForm::addCourse(int facultyNumber, int courseNumb
 		return;
 	};
 	Course course = Course(courseNumber);
+	Faculty faculty;
 	try
 	{
-		faculties.getByValue(Faculty(facultyNumber)).courses.push_end(course);
+		faculty = faculties.getByValue(Faculty(facultyNumber));
 	}
 	catch (const std::exception&)
 	{
 		MessageBox::Show(this, "Неверный номер факультета!");
 	}
+	faculty.courses.push_end(course);
+	faculty.courses.sort();
 	KursProjectTimetable::MainForm::facultiesListPaint();
 }
 void KursProjectTimetable::MainForm::deleteGroup(int facultyNumber, int courseNumber, int groupNumber) {
@@ -291,6 +297,7 @@ void KursProjectTimetable::MainForm::deleteGroup(int facultyNumber, int courseNu
 	try
 	{
 		course->groups.removeByValue(Group(groupNumber));
+		course->groups.sort();
 	}
 	catch (const std::exception&)
 	{
@@ -330,6 +337,7 @@ void KursProjectTimetable::MainForm::addGroup(int facultyNumber, int courseNumbe
 		return;
 	}
 	course->groups.push_end(Group(groupNumber));
+	course->groups.sort();
 	KursProjectTimetable::MainForm::facultiesListPaint();
 }
 void KursProjectTimetable::MainForm::addSchoolDay(int facultyNumber, int courseNumber, int groupNumber, int schoolDayNumber) {
@@ -377,6 +385,7 @@ void KursProjectTimetable::MainForm::addSchoolDay(int facultyNumber, int courseN
 		return;
 	}
 	group->timetable.schoolDays.push_end(SchoolDay(schoolDayNumber));
+	group->timetable.schoolDays.sort();
 	KursProjectTimetable::MainForm::facultiesListPaint();
 }
 void KursProjectTimetable::MainForm::deleteSchoolDay(int facultyNumber, int courseNumber, int groupNumber, int schoolDayNumber) {
@@ -430,6 +439,7 @@ void KursProjectTimetable::MainForm::deleteSchoolDay(int facultyNumber, int cour
 	try
 	{
 		group->timetable.schoolDays.removeByValue(SchoolDay(schoolDayNumber));
+		group->timetable.schoolDays.sort();
 	}
 	catch (const std::exception&)
 	{
@@ -497,7 +507,8 @@ void KursProjectTimetable::MainForm::addLesson(int facultyNumber, int courseNumb
 		return;
 	}
 	schoolDay->lessons.push_end(Lesson(Stos(subjectName), audienceNumber, Stos(teacherName), lessonNumber));
-	KursProjectTimetable::MainForm::facultiesListPaint();
+	schoolDay->lessons.sort();
+	KursProjectTimetable::MainForm::timetablePaint(faculties.getIndexByValue(*faculty), faculty->courses.getIndexByValue(*course), course->groups.getIndexByValue(*group), group->timetable.schoolDays.getIndexByValue(*schoolDay));
 }
 void KursProjectTimetable::MainForm::deleteLesson(int facultyNumber, int courseNumber, int groupNumber, int schoolDayNumber, int lessonNumber) {
 	if (faculties.is_empty()) {
@@ -564,6 +575,7 @@ void KursProjectTimetable::MainForm::deleteLesson(int facultyNumber, int courseN
 	try
 	{
 		schoolDay->lessons.removeByValue(Lesson(lessonNumber));
+		schoolDay->lessons.sort();
 	}
 	catch (const std::exception&)
 	{
@@ -594,8 +606,8 @@ void jParse(nlohmann::json_abi_v3_11_2::json& j_complete, SLList<Faculty>& facul
 				CircularList<SchoolDay> schoolDays;
 				for (auto& j_timetable : j_group.value()["timetable"].items())
 				{
-					SchoolDay schoolDay;
-					schoolDay.day = utf2cp(j_timetable.value()["day"].get<std::string>());
+					SchoolDay schoolDay = SchoolDay(utf2cp(j_timetable.value()["day"].get<std::string>()));;
+					 
 					SLList<Lesson> lessons;
 					for (auto& j_lesson : j_timetable.value()["lessons"].items())
 					{

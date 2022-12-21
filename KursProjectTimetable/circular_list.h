@@ -168,7 +168,7 @@ inline void CircularList<T>::sort()
 		}
 		node_j->data = x.data;
 		i_pointer = i_pointer->next;
-		i++;
+		//i++;
 	}
 }
 
