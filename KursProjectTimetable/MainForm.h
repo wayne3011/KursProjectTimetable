@@ -19,7 +19,7 @@ namespace KursProjectTimetable {
 	using namespace System::Drawing;
 
 	/// <summary>
-	/// Summary for MainForm
+	/// Главное окно приложения
 	/// </summary>
 	public ref class MainForm : public System::Windows::Forms::Form
 	{
@@ -27,15 +27,8 @@ namespace KursProjectTimetable {
 		MainForm(void)
 		{
 			InitializeComponent();
-			//
-			//TODO: Add the constructor code here
-			//
 		}
-
 	protected:
-		/// <summary>
-		/// Clean up any resources being used.
-		/// </summary>
 		~MainForm()
 		{
 			if (components)
@@ -43,8 +36,6 @@ namespace KursProjectTimetable {
 				delete components;
 			}
 		}
-
-
 	protected:
 	private: System::Windows::Forms::TabPage^ tabPage2;
 	private: System::Windows::Forms::Button^ loadDataButton;
@@ -70,32 +61,13 @@ namespace KursProjectTimetable {
 	private: System::Windows::Forms::GroupBox^ fileManagerBox;
 	private: System::Windows::Forms::Button^ outInFileButton;
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 	private:
-		/// <summary>
-		/// Required designer variable.
-		/// </summary>
 		System::ComponentModel::Container^ components;
+		//регион Windows Form Designer для генерации конструктора форма, статический дизайн
 #pragma region Windows Form Designer generated code
-		/// <summary>
-		/// Required method for Designer support - do not modify
-		/// the contents of this method with the code editor.
-		/// </summary>
 		void InitializeComponent(void)
 		{
+			System::ComponentModel::ComponentResourceManager^ resources = (gcnew System::ComponentModel::ComponentResourceManager(MainForm::typeid));
 			this->loadDataButton = (gcnew System::Windows::Forms::Button());
 			this->tableLayoutPanel1 = (gcnew System::Windows::Forms::TableLayoutPanel());
 			this->controlElementBox = (gcnew System::Windows::Forms::GroupBox());
@@ -149,7 +121,6 @@ namespace KursProjectTimetable {
 			this->tableLayoutPanel1->RowStyles->Add((gcnew System::Windows::Forms::RowStyle(System::Windows::Forms::SizeType::Percent, 91.62011F)));
 			this->tableLayoutPanel1->Size = System::Drawing::Size(860, 547);
 			this->tableLayoutPanel1->TabIndex = 0;
-			this->tableLayoutPanel1->Paint += gcnew System::Windows::Forms::PaintEventHandler(this, &MainForm::tableLayoutPanel1_Paint);
 			// 
 			// controlElementBox
 			// 
@@ -332,8 +303,9 @@ namespace KursProjectTimetable {
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
 			this->ClientSize = System::Drawing::Size(884, 561);
 			this->Controls->Add(this->tableLayoutPanel1);
+			this->Icon = (cli::safe_cast<System::Drawing::Icon^>(resources->GetObject(L"$this.Icon")));
 			this->Name = L"MainForm";
-			this->Text = L"MainForm";
+			this->Text = L"Расписание";
 			this->tableLayoutPanel1->ResumeLayout(false);
 			this->controlElementBox->ResumeLayout(false);
 			this->treeBox->ResumeLayout(false);
@@ -343,81 +315,99 @@ namespace KursProjectTimetable {
 
 		}
 #pragma endregion
+		//загрузка расписания из файла
 		void loadFromFile(String^ fileName);
+		//выгрузка расписаний в файл
 		void outInFile(String^ path);
+		//отрисовка списка факультетов
 		void facultiesListPaint();
+		//отрисовка расписания
 		void timetablePaint(int facultyNumber, int courseNumber, int groupNumber, int dayNumber);
+		//переход на следуюший день недели
 		void nextDayPaint();
+		//переход на предыдущий день недели
 		void previousDayPaint();
+		//добавление нового факультета
 		void addFaculty(int facultyNumber);
+		//удаление факультета
 		void deleteFaculty(int facultyNumber);
+		//удаление курса
 		void deleteCourse(int facultyNumber, int courseNumber);
+		//добавление нового курса
 		void addCourse(int facultyNumber, int courseNumber);
+		//удаление группы
 		void deleteGroup(int facultyNumber, int courseNumber, int groupNumber);
+		//добавление новой группы
 		void addGroup(int facultyNumber, int courseNumber, int groupNumber);
+		//добавление нового учебного дня
 		void addSchoolDay(int facultyNumber, int courseNumber, int groupNumber, int schoolDayNumber);
+		//удаление учебного дня
 		void deleteSchoolDay(int facultyNumber, int courseNumber, int groupNumber, int schoolDayNumber);
+		//добавление нового занятия
 		void addLesson(int facultyNumber, int courseNumber, int groupNumber, int schoolDayNumber, System::String^ subjectName, System::String^ teacherName, int lessonNumber, int audienceNumber);
+		//удаление занятия
 		void deleteLesson(int facultyNumber, int courseNumber, int groupNumber, int schoolDayNumber, int lessonNumber);
 
 		
 
 
-
+	//обработчик события нажатия на кнопку loadDataButton(Загрузить расписание)
 	private: System::Void loadDataButton_Click(System::Object^ sender, System::EventArgs^ e) {
 		OpenFileDialog openFileDialog;
 		openFileDialog.Filter = "JSON (.json)|*.json";
-		if (openFileDialog.ShowDialog() == Windows::Forms::DialogResult::OK) {
+		if (openFileDialog.ShowDialog() == Windows::Forms::DialogResult::OK) {//вызываем диалог для получения пути чтения файла
 
-			this->tableLayoutPanel1->Controls->RemoveByKey("tabControl");
-			loadFromFile(openFileDialog.FileName);
-			this->tableLayoutPanel1->Update();
+			this->tableLayoutPanel1->Controls->RemoveByKey("tabControl");//удаляем элемент содержащий список факультетов со старым расписанием
+			loadFromFile(openFileDialog.FileName);//вызываем функцию ввода с файла
 		}
 
-		else return this->tableLayoutPanel1->Controls->RemoveByKey("tabControl");
+		else return;
 	}
+	//обработчик события нажатия на кнопку outInFileButton(Сохранить расписание)
 	private: System::Void outInFileButton_Click(System::Object^ sender, System::EventArgs^ e) {
 		SaveFileDialog selectedFile;
 		selectedFile.Filter = "JSON (.json)|*.json";
 		selectedFile.DefaultExt = ".json";
-		if (selectedFile.ShowDialog() == Windows::Forms::DialogResult::OK) {
-			outInFile(selectedFile.FileName);
+		if (selectedFile.ShowDialog() == Windows::Forms::DialogResult::OK) {//открываем диалог для получения пути записи файла
+			outInFile(selectedFile.FileName);//вызываем функицю записи в файл
 		}
 	}
-	private: System::Void tableLayoutPanel1_Paint(System::Object^ sender, System::Windows::Forms::PaintEventArgs^ e) {
-	}
+		   //обработчик события нажатия на дерево treeView с расписанием(выбор учеьного дня)
 	private: System::Void treeView_NodeClick(System::Object^ sender, System::Windows::Forms::TreeNodeMouseClickEventArgs^ e) {
-		if (e->Node->Name == "WeekDay") {
-			this->treeBox->Controls->RemoveByKey("schoolDayTree");
-			timetablePaint(e->Node->TreeView->Parent->TabIndex, e->Node->Parent->Parent->Index, e->Node->Parent->Index, e->Node->Index);
-			treeBox->Update();
+		if (e->Node->Name == "WeekDay") {//если нажали на узел, содержащий день недели
+			this->treeBox->Controls->RemoveByKey("schoolDayTree");//из элемента с расписанием удаляем старое расписание
+			timetablePaint(e->Node->TreeView->Parent->TabIndex, e->Node->Parent->Parent->Index, e->Node->Parent->Index, e->Node->Index);//вызваем функцию отрисовки нового расписания
 		};
 	}
+		   //обработчик события нажатия на кнопку buttonPrevious(предыдущий)
 	private: System::Void buttonPrevious_Click(System::Object^ sender, System::EventArgs^ e) {
-		if (!this->treeBox->Controls->ContainsKey("schoolDayTree")) return;
-		this->treeBox->Controls->RemoveByKey("schoolDayTree");
-		previousDayPaint();
-		controlElementBox->Update();
+		if (!this->treeBox->Controls->ContainsKey("schoolDayTree")) return;//если распсание определённого дня уже ещё не выведено ничего не делаем
+		//иначе
+		this->treeBox->Controls->RemoveByKey("schoolDayTree");//удаляем прошлое расписание
+		previousDayPaint();//отрисовываем расписание для следующего по порядку дня
 	}
+		   //обработчик события нажатия на кнопку buttonNext(следующий)
 	private: System::Void buttonNext_Click(System::Object^ sender, System::EventArgs^ e) {
 		if (!this->treeBox->Controls->ContainsKey("schoolDayTree")) return;
 		this->treeBox->Controls->RemoveByKey("schoolDayTree");
 		nextDayPaint();
-		controlElementBox->Update();
 	}
+		   //обработчик события нажатия на кнопку addFacultyButton(Добавить факультет)
 	private: System::Void addFacultyButton_Click(System::Object^ sender, System::EventArgs^ e) {
-		AddFacultyForm^ addFacultyForm = gcnew(KursProjectTimetable::AddFacultyForm);
-
-		addFacultyForm->ShowDialog();
-
-		if (addFacultyForm->facultyNumber == -1) {
+		AddFacultyForm^ addFacultyForm = gcnew(KursProjectTimetable::AddFacultyForm);//создаём объект формы для ввода пользовательских значений нового факультета
+		addFacultyForm->ShowDialog();//показываем форму для ввода пользовательских значений нового факультета
+		if (addFacultyForm->facultyNumber == -1) {//если значения не были введены корректно поле формы будет хранить -1
 			return;
 		}
+		//добавляем новый факультет
 		addFaculty(addFacultyForm->facultyNumber);
 
 	}
+		   ///
+		   /// остальные обработчики событий кнопок добавления имеют схожую логику, за исключением большего количества вводимых пользователем полей
+		   ///
 
-
+		   //обработчик события нажатия на кнопку addCourse(Добавить курс)
 	private: System::Void addCourseButton_Click(System::Object^ sender, System::EventArgs^ e) {
 		KursProjectTimetable::AddCourseForm^ addCourseForm = gcnew(KursProjectTimetable::AddCourseForm);
 		addCourseForm->ShowDialog();
@@ -427,6 +417,7 @@ namespace KursProjectTimetable {
 		addCourse(addCourseForm->facultyNumber, addCourseForm->courseNumber);
 
 	}
+		   //обработчик события нажатия на кнопку addGroupButton(Добавить группу)
 	private: System::Void addGroupButton_Click(System::Object^ sender, System::EventArgs^ e) {
 		KursProjectTimetable::AddGroupForm^ addGroupForm = gcnew(KursProjectTimetable::AddGroupForm);
 		addGroupForm->ShowDialog();
@@ -435,6 +426,7 @@ namespace KursProjectTimetable {
 		}
 		addGroup(addGroupForm->facultyNumber, addGroupForm->courseNumber, addGroupForm->groupNumber);
 	}
+		   //обработчик события нажатия на кнопку addSchoolDay(Добавить учебный день)
 	private: System::Void addSchoolDay_button_Click(System::Object^ sender, System::EventArgs^ e) {
 		KursProjectTimetable::AddSchoolDayForm^ addSchoolDayForm = gcnew(KursProjectTimetable::AddSchoolDayForm);
 		addSchoolDayForm->ShowDialog();
@@ -443,7 +435,7 @@ namespace KursProjectTimetable {
 		}
 		addSchoolDay(addSchoolDayForm->facultyNumber, addSchoolDayForm->courseNumber, addSchoolDayForm->groupNumber, addSchoolDayForm->schoolDayNumber-1);
 	}
-
+		   //обработчик события нажатия на кнопку addLessonButton(Добавить занятие)
 	private: System::Void addLessonButton_Click(System::Object^ sender, System::EventArgs^ e) {
 		KursProjectTimetable::AddLessonForm^ addLessonForm = gcnew(KursProjectTimetable::AddLessonForm);
 		addLessonForm->ShowDialog();
@@ -452,15 +444,22 @@ namespace KursProjectTimetable {
 		};
 		addLesson(addLessonForm->facultyNumber, addLessonForm->courseNumber, addLessonForm->groupNumber, addLessonForm->schoolDayNumber-1, addLessonForm->subjectName, addLessonForm->teacherName, addLessonForm->lessonNumber, addLessonForm->audienceNumber);
 	}
+		   //обработчик события нажатия на кнопку deleteFacultyButton(удалить факультет)
 	private: System::Void deleteFacultyButton_Click(System::Object^ sender, System::EventArgs^ e) {
-		KursProjectTimetable::DeleteFacultyForm^ deleteFacultyForm = gcnew(KursProjectTimetable::DeleteFacultyForm);
-		deleteFacultyForm->ShowDialog();
+		KursProjectTimetable::DeleteFacultyForm^ deleteFacultyForm = gcnew(KursProjectTimetable::DeleteFacultyForm);//создаём объект формы для получения пользовательских данных для удаления факультета
+		deleteFacultyForm->ShowDialog();//показываем форму для получения пользовательских данных для удаления факультета
 
-		if (deleteFacultyForm->facultyNumber == -1) {
+		if (deleteFacultyForm->facultyNumber == -1) {//если значения не были введены корректно поле формы будет хранить -1
 			return;
 		}
-		deleteFaculty(deleteFacultyForm->facultyNumber);
+		deleteFaculty(deleteFacultyForm->facultyNumber);//удаляем факультет
 	}
+
+		  ///
+		  /// остальные обработчики событий кнопок удаления имеют схожую логику, за исключением большего количества вводимых пользователем полей
+		  ///
+
+		   //обработчик события нажатия на кнопку deleteCourseButton(удалить курс)
 	private: System::Void deleteCourseButton_Click(System::Object^ sender, System::EventArgs^ e) {
 		KursProjectTimetable::DeleteCourseForm^ deleteCourseForm = gcnew(KursProjectTimetable::DeleteCourseForm);
 		deleteCourseForm->ShowDialog();
@@ -469,6 +468,7 @@ namespace KursProjectTimetable {
 		}
 		deleteCourse(deleteCourseForm->facultyNumber, deleteCourseForm->courseNumber);
 	}
+		   //обработчик события нажатия на кнопку deleteGroupButton(удалить группу)
 	private: System::Void deleteGroupButton_Click(System::Object^ sender, System::EventArgs^ e) {
 		KursProjectTimetable::DeleteGroupForm^ deleteGroupForm = gcnew(KursProjectTimetable::DeleteGroupForm);
 		deleteGroupForm->ShowDialog();
@@ -477,6 +477,7 @@ namespace KursProjectTimetable {
 		};
 		deleteGroup(deleteGroupForm->facultyNumber, deleteGroupForm->courseNumber, deleteGroupForm->groupNumber);
 	};
+		   //обработчик события нажатия на кнопку deleteSchoolDayButton(удалить учебный день)
 	private: System::Void deleteSchoolDayButton_Click(System::Object^ sender, System::EventArgs^ e) {
 		KursProjectTimetable::DeleteSchoolDayForm^ deleteSchoolDayForm = gcnew(KursProjectTimetable::DeleteSchoolDayForm);
 		deleteSchoolDayForm->ShowDialog();
@@ -485,6 +486,7 @@ namespace KursProjectTimetable {
 		}
 		deleteSchoolDay(deleteSchoolDayForm->facultyNumber, deleteSchoolDayForm->courseNumber, deleteSchoolDayForm->groupNumber, deleteSchoolDayForm->schoolDayNumber-1);
 	}
+		   //обработчик события нажатия на кнопку deleteLessonButton(удалить занятие)
 private: System::Void deleteLessonButton_Click(System::Object^ sender, System::EventArgs^ e) {
 	KursProjectTimetable::DeleteLessonForm^ deleteLessonForm = gcnew(KursProjectTimetable::DeleteLessonForm);
 	deleteLessonForm->ShowDialog();
