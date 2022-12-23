@@ -15,6 +15,7 @@ int main(array < String^>^ args)
     KursProjectTimetable::MainForm form;//создаём объект главной формы приложения
     Application::Run(% form);//запускаем приложение с главной формой
 }
+
 SLList<Faculty> faculties;//глобальная переменная для хранения корня базы данных -  списка факультетов
 struct SelectedSchoolDay {//текущий выбранный день недели с расписанием
 	int facultyNumber;
@@ -264,7 +265,6 @@ void KursProjectTimetable::MainForm::addCourse(int facultyNumber, int courseNumb
 		MessageBox::Show(this, "Неверный номер факультета!");
 	}
 	faculty->courses.push_end(Course(courseNumber));//добавляем новый курс в список курсов факультета
-	faculty->courses.sort();
 	KursProjectTimetable::MainForm::facultiesListPaint();//отрисовываем список факультетов заново
 }
 

@@ -72,7 +72,6 @@ namespace KursProjectTimetable {
 			this->textBox1->Size = System::Drawing::Size(34, 20);
 			this->textBox1->TabIndex = 0;
 			this->textBox1->TextChanged += gcnew System::EventHandler(this, &AddCourseForm::textBox1_TextChanged);
-
 			// 
 			// label1
 			// 
@@ -123,8 +122,9 @@ namespace KursProjectTimetable {
 			this->Controls->Add(this->label2);
 			this->Controls->Add(this->label1);
 			this->Controls->Add(this->textBox1);
+			this->Icon = (cli::safe_cast<System::Drawing::Icon^>(resources->GetObject(L"$this.Icon")));
 			this->Name = L"AddCourseForm";
-			this->Text = L"AddCourseForm";
+			this->Text = L"Добавление курса";
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->addButton))->EndInit();
 			this->ResumeLayout(false);
 			this->PerformLayout();

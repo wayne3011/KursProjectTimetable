@@ -93,7 +93,6 @@ namespace KursProjectTimetable {
 			this->addButton->Click += gcnew System::EventHandler(this, &AddFacultyForm::addButton_Click);
 			this->addButton->MouseEnter += gcnew System::EventHandler(this, &AddFacultyForm::addButton_MouseEnter);
 			this->addButton->MouseLeave += gcnew System::EventHandler(this, &AddFacultyForm::addButton_MouseLeave);
-
 			// 
 			// AddFacultyForm
 			// 
@@ -103,8 +102,9 @@ namespace KursProjectTimetable {
 			this->Controls->Add(this->addButton);
 			this->Controls->Add(this->label1);
 			this->Controls->Add(this->textBox1);
+			this->Icon = (cli::safe_cast<System::Drawing::Icon^>(resources->GetObject(L"$this.Icon")));
 			this->Name = L"AddFacultyForm";
-			this->Text = L"AddFacultyForm";
+			this->Text = L"Добавление факультета";
 			this->Load += gcnew System::EventHandler(this, &AddFacultyForm::AddFacultyForm_Load);
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->addButton))->EndInit();
 			this->ResumeLayout(false);

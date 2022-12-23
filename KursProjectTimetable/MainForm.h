@@ -375,7 +375,6 @@ namespace KursProjectTimetable {
 		   //обработчик события нажатия на дерево treeView с расписанием(выбор учеьного дня)
 	private: System::Void treeView_NodeClick(System::Object^ sender, System::Windows::Forms::TreeNodeMouseClickEventArgs^ e) {
 		if (e->Node->Name == "WeekDay") {//если нажали на узел, содержащий день недели
-			this->treeBox->Controls->RemoveByKey("schoolDayTree");//из элемента с расписанием удаляем старое расписание
 			timetablePaint(e->Node->TreeView->Parent->TabIndex, e->Node->Parent->Parent->Index, e->Node->Parent->Index, e->Node->Index);//вызваем функцию отрисовки нового расписания
 		};
 	}
@@ -401,7 +400,6 @@ namespace KursProjectTimetable {
 		}
 		//добавляем новый факультет
 		addFaculty(addFacultyForm->facultyNumber);
-
 	}
 		   ///
 		   /// остальные обработчики событий кнопок добавления имеют схожую логику, за исключением большего количества вводимых пользователем полей
@@ -415,7 +413,6 @@ namespace KursProjectTimetable {
 			return;
 		}
 		addCourse(addCourseForm->facultyNumber, addCourseForm->courseNumber);
-
 	}
 		   //обработчик события нажатия на кнопку addGroupButton(Добавить группу)
 	private: System::Void addGroupButton_Click(System::Object^ sender, System::EventArgs^ e) {
